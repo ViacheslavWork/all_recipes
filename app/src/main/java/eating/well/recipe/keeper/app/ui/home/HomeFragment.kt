@@ -20,7 +20,6 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
-import eating.well.recipe.keeper.app.utils.Constants
 import eating.well.recipe.keeper.app.utils.RecipeParser.putRecipesFun
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -73,7 +72,7 @@ class HomeFragment : Fragment() {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             requireContext(),
-            Constants.INTERSTITIAL_ID_TEST,
+            resources.getString(R.string.interstitial_id),
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
@@ -172,10 +171,14 @@ class HomeFragment : Fragment() {
     private fun observeLayoutState(view: View) {
         homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
             if (it) {
+                val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = GridLayoutManager(context, 2)
+                layoutManager.onRestoreInstanceState(currentPosition)
                 setUpRecyclerView(view, layoutManager)
             } else {
+                val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = LinearLayoutManager(context)
+                layoutManager.onRestoreInstanceState(currentPosition)
                 setUpRecyclerView(view, layoutManager)
             }
         }
