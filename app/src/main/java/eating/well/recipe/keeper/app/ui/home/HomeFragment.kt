@@ -1,7 +1,6 @@
 package eating.well.recipe.keeper.app.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Toast
@@ -21,6 +20,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
+import eating.well.recipe.keeper.app.utils.Constants
 import eating.well.recipe.keeper.app.utils.RecipeParser.putRecipesFun
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,23 +30,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 private const val TAG = "HomeFragment"
 
 class HomeFragment : Fragment() {
-
-    companion object {
-        private const val ARG_COLUMN_COUNT = "column-count"
-        private const val LIST_STATE_KEY = "recycler_state"
-        private const val CLICKED_POSITION = "clicked_position"
-
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-
-    }
-
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecipesAdapter
 
@@ -56,8 +39,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var rectangleMenuItem: MenuItem
     private lateinit var gridMenuItem: MenuItem
-
-    private var clickedPosition = 0
 
     //Interstitial
     private var interAd: InterstitialAd? = null
@@ -69,7 +50,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        savedInstanceState?.getInt(CLICKED_POSITION)?.let { clickedPosition = it }
     }
 
     override fun onCreateView(
@@ -78,11 +58,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 //        downloadRecipes()
 //        writeToFile()
 
-        return root
+        return binding.root
     }
 
     override fun onResume() {
@@ -94,16 +73,14 @@ class HomeFragment : Fragment() {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             requireContext(),
-            "ca-app-pub-3940256099942544/1033173712",
+            Constants.INTERSTITIAL_ID_TEST,
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d(TAG, adError.message)
                     interAd = null
                 }
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    Log.d(TAG, "Ad was loaded.")
                     interAd = interstitialAd
                 }
             })
@@ -115,17 +92,14 @@ class HomeFragment : Fragment() {
                 override fun onAdDismissedFullScreenContent() {
                     function()
                     interAd = null
-                    Log.d(TAG, "Ad was dismissed.")
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
                     function()
                     interAd = null
-                    Log.d(TAG, "Ad failed to show.")
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "Ad showed fullscreen content.")
                     function()
                     interAd = null
                 }
@@ -195,12 +169,6 @@ class HomeFragment : Fragment() {
         observeEvent()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        layoutManager.onSaveInstanceState()?.let { outState.putParcelable(LIST_STATE_KEY, it) }
-        outState.putInt(CLICKED_POSITION, clickedPosition)
-    }
-
     private fun observeLayoutState(view: View) {
         homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
             if (it) {
@@ -216,7 +184,6 @@ class HomeFragment : Fragment() {
     private fun setUpRecyclerView(view: View, layoutManager: RecyclerView.LayoutManager) {
         recyclerView = view.findViewById(R.id.rv_recipe_cards)
         recyclerView.layoutManager = layoutManager
-        recyclerView.layoutManager?.scrollToPosition(clickedPosition)
     }
 
     private fun setUpToolbar(view: View) {
@@ -256,12 +223,9 @@ class HomeFragment : Fragment() {
         homeViewModel.recipeListEvent.observe(this, {
             when (it) {
                 is RecipeListEvent.OnRecipeClick -> {
-                    clickedPosition = it.position
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
-                            findNavController().navigate(
-                                HomeFragmentDirections.actionHomeFragmentToDetailsFragment()
-                            )
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
                         }
                     }
                 }
@@ -280,7 +244,6 @@ class HomeFragment : Fragment() {
                 }
                 else -> {
                     adapter.submitList(it.recipes.toMutableList())
-                    Log.i(TAG, "lenght: ${it.recipes.size}");
                 }
             }
         })
@@ -288,12 +251,13 @@ class HomeFragment : Fragment() {
 
     private fun setUpAdapter() {
         adapter = RecipesAdapter()
+        adapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         adapter.event.observe(viewLifecycleOwner, {
             homeViewModel.handleEvent(it)
         })
         recyclerView.adapter = adapter
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

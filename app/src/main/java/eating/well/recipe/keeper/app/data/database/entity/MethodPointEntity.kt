@@ -27,22 +27,3 @@ object MethodPointEntityListConverter {
         return gson.toJson(map, type)
     }
 }
-
-/*
-class DataConverter {
-
-    @TypeConverter
-    fun fromCountryLangList(value: List<MethodPointEntity>): String {
-        val gson = Gson()
-        val type = object : TypeToken<List<MethodPointEntity>>() {}.type
-        return gson.toJson(value, type)
-    }
-
-    @TypeConverter
-    fun toCountryLangList(value: String): List<MethodPointEntity> {
-        val gson = Gson()
-        val type = object : TypeToken<List<MethodPointEntity>>() {}.type
-        return gson.fromJson(value, type)
-    }
-
-}*/

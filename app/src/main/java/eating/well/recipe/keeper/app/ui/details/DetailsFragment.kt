@@ -83,7 +83,6 @@ class DetailsFragment : Fragment() {
         homeViewModel.recipeListEvent.observe(this) {
             when (it) {
                 is RecipeListEvent.OnRecipeClick -> {
-//                    Log.i(TAG, "OnRecipeClick: ${it.recipeEntity}");
                     recipeEntity = it.recipeEntity
 
                     binding.detailsTitleTv.text = recipeEntity?.title
@@ -100,10 +99,6 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
-
-
-
-        Log.i(TAG, "recipe big image: ${recipeEntity?.detailImage}");
 
     }
 
@@ -150,8 +145,6 @@ class DetailsFragment : Fragment() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_new_24)
         toolbar.setNavigationOnClickListener {
-//            requireActivity().onBackPressed()
-            Log.i(TAG, ": back");
             homeViewModel.handleEvent(RecipeListEvent.OnBackClick())
         }
         toolbar.title = getString(R.string.recipe)

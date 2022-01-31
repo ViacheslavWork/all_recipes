@@ -1,41 +1,32 @@
 package eating.well.recipe.keeper.app
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.ui.AppBarConfiguration
 import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.databinding.ActivityMainBinding
-import eating.well.recipe.keeper.app.ui.details.DetailsFragment
-import eating.well.recipe.keeper.app.ui.greating.GreetingFragment
-import eating.well.recipe.keeper.app.ui.home.HomeFragment
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import eating.well.recipe.keeper.app.ui.home.RecipeListEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
-
-
-    companion object {
-        const val DETAILS_FRAGMENT_TAG = "DetailsFragment"
-        const val RECIPES_FRAGMENT_TAG = "RecipesListFragment"
-        const val GREETING_FRAGMENT_TAG = "GreetingFragment"
-        private const val TAG = "MainActivity"
-    }
-
     private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         observeHomeVM()
         setUpNavigationView()
     }
@@ -79,7 +70,6 @@ class MainActivity : AppCompatActivity() {
             when (it) {
                 RecipeListEvent.OnShowMoreRecipesClick -> binding.drawerLayout.open()
                 is RecipeListEvent.OnBackClick -> {
-                    Log.i(TAG, ": ${it.hasBeenHandled}");
                     if (!it.hasBeenHandled) {
                         onBackPressed()
                         it.setHandled()

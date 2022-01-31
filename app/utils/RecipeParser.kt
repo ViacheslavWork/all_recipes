@@ -17,17 +17,14 @@ object RecipeParser {
         withContext(Dispatchers.IO) {
             val document: Document =
                 Jsoup.connect(urlOfListRecipes).get()
-            Log.i(TAG, "Test fun: ${document.title()}");
             val listBlock =
                 document.getElementsByClass("comp mntl-taxonomysc-article-list mntl-document-card-list mntl-card-list mntl-block")
             val elements =
                 listBlock[0].getElementsByClass("comp mntl-card-list-items mntl-document-card mntl-card card")
-//        fillDataFromList(elements).forEach { /*Log.i(TAG, "Recipe: $it")*/; }
 //        fillDataFromDetails(fillDataFromList(elements))
             val recipesFromList = fillDataFromList(elements = elements, category = category)
             val recipesWithDetails = fillDataFromDetails(recipesFromList)
             return@withContext recipesWithDetails
-//        recipesWithDetails.forEach { Log.i(TAG, "Recipe: $it "); }
         }
 
     private fun fillDataFromList(elements: Elements, category: Category): List<RecipeEntity> {
@@ -53,12 +50,7 @@ object RecipeParser {
                 )
 
 
-            //            Log.i(TAG, "Title: $title, absolute url: $absoluteUrl, ref: $ref");
-//                        Log.i(TAG, "Element: ${item.attr("id")}");
-            //            Log.i(TAG, "$absoluteUrl");
-//            println(ref)
             recipes.add(entity)
-//            Log.i(TAG, "image: $absoluteUrlImage");
 
         }
         return recipes.toList()
@@ -69,7 +61,6 @@ object RecipeParser {
         recipes.forEach {
             val document: Document =
                 Jsoup.connect(it.detailUrl).get()
-            Log.i(TAG, "Details: ${document.title()}");
 
             var imageDetails = ""
             imageDetails = getDetailImageUrl(imageDetails, document)

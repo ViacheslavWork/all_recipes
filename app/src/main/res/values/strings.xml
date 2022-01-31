@@ -25,4 +25,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_daily_healthy_recipe_app">Welcome to Daily Healthy Recipe App</string>
+
+    <string name="banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="app_test_id">ca-app-pub-3940256099942544~3347511713</string>
 </resources>

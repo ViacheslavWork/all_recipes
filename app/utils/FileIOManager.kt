@@ -17,7 +17,6 @@ class FileIOManager(private val context: Context) {
     private var imageCounter: Int = 0
     fun writeToFile(recipes: List<RecipeEntity>, fileName: String) {
         val path = context.getExternalFilesDir(null)
-        Log.i(TAG, "path: $path");
         val letDirectory = File(path, "LET")
         letDirectory.mkdirs()
         val file = File(letDirectory, fileName)
@@ -28,7 +27,6 @@ class FileIOManager(private val context: Context) {
 
     fun writePathsToFile(recipes: List<RecipeEntity>, fileName: String) {
         val path = context.getExternalFilesDir(null)
-        Log.i(TAG, "path: $path");
         val letDirectory = File(path, "LET")
         letDirectory.mkdirs()
         val file = File(letDirectory, fileName)
@@ -56,7 +54,6 @@ class FileIOManager(private val context: Context) {
                 }
             }
         }
-        Log.i(TAG, "duplicates: $counterDuplicates ");
     }
 
     fun saveImage(url: String) {
@@ -75,8 +72,6 @@ class FileIOManager(private val context: Context) {
 
     private fun writeImageToExternalStorage(image: Bitmap, url: String) {
         val path = context.getExternalFilesDir(null)
-//        Log.i(TAG, "path: $path");
-        Log.i(TAG, "Image ${++imageCounter}: $image");
         val letDirectory = File(path, "big_images")
         letDirectory.mkdirs()
         val file = File(letDirectory, url.split("/").let { it[it.size - 1] })
@@ -93,7 +88,6 @@ class FileIOManager(private val context: Context) {
         val fis = FileInputStream(file)
         val ois = ObjectInputStream(fis)
         val recipes = ois.readObject() as Recipes
-        Log.i(TAG, "input: ${recipes.recipesList.size}");
         return recipes.recipesList
     }
 
@@ -101,7 +95,6 @@ class FileIOManager(private val context: Context) {
         val inputStream = context.assets.open(fileName)
         val ois = ObjectInputStream(inputStream)
         val recipes = ois.readObject() as Recipes
-        Log.i(TAG, "input: ${recipes.recipesList.size}");
         return recipes.recipesList
     }
 }

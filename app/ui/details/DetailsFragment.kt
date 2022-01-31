@@ -42,20 +42,11 @@ class DetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        /*return inflater.inflate(
-            R.layout.fragment_details,
-            container,
-            false
-        )*/
-
-
+    ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUpToolbar(view)
         setUpViews()
@@ -82,7 +73,6 @@ class DetailsFragment : Fragment() {
 
         setImage()
 
-        Log.i(TAG, "recipe big image: ${recipeEntity?.detailImage}");
 
     }
 
@@ -120,7 +110,7 @@ class DetailsFragment : Fragment() {
         recipeEntity?.ingredients?.forEach { ingredients.append("$it\n") }
         ingredients.trim()
         if (ingredients.isNotBlank()) {
-            binding.ingredientsTv.text = ingredients.substring(0,ingredients.length-1)
+            binding.ingredientsTv.text = ingredients.substring(0, ingredients.length - 1)
         }
     }
 

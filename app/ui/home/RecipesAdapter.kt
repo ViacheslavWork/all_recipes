@@ -53,7 +53,6 @@ class MoviesViewHolderList(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .load(Uri.parse("file:///android_asset/small_images/${componentsOfAds[componentsOfAds.size - 1]}"))
 //            .apply(imageOption)
             .into(receiptImage)
-//        Log.i(TAG, "image ads: ${componentsOfAds[componentsOfAds.size - 1]}");
     }
 }
 
