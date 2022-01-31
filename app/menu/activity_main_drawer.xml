@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_menu"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cross"
+            android:icon="@drawable/ic_cross"
+            android:title="" />
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pasta"
+            android:title="@string/pasta" />
+        <item
+            android:id="@+id/nav_diet"
+            android:title="@string/diet" />
+        <item
+            android:id="@+id/nav_method"
+            android:title="@string/method" />
+        <item
+            android:id="@+id/nav_ingredients"
+            android:title="@string/ingredients" />
+        <item
+            android:id="@+id/nav_time_ease"
+            android:title="@string/time_ease" />
+        <item
+            android:id="@+id/nav_cuisine"
+            android:title="@string/cuisine" />
+    </group>
+
+
+</menu>

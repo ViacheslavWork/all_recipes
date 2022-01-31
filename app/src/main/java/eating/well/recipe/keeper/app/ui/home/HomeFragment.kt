@@ -202,7 +202,6 @@ class HomeFragment : Fragment() {
                             HomeFragmentDirections.actionHomeFragmentToDetailsFragment()
                         )
                     }
-                    Log.i(TAG, "OnRecipeClick: ");
                 }
             }
         })
@@ -228,8 +227,6 @@ class HomeFragment : Fragment() {
 
     private fun setUpAdapter() {
         adapter = RecipesAdapter()
-        /*adapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY*/
         adapter.event.observe(viewLifecycleOwner, {
             homeViewModel.handleEvent(it)
         })

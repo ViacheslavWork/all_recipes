@@ -1,4 +1,4 @@
-package eating.well.recipe.keeper.app.ui.details
+package com.android.app.ui.details
 
 import android.net.Uri
 import android.os.Bundle
@@ -10,35 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import com.android.app.R
+import com.android.app.data.database.entity.RecipeEntity
+import com.android.app.databinding.FragmentDetailsBinding
+import com.android.app.databinding.FragmentHomeBinding
+import com.android.app.ui.home.HomeViewModel
+import com.android.app.ui.home.RecipeListEvent
 import com.bumptech.glide.Glide
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import eating.well.recipe.keeper.app.R
-import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
-import eating.well.recipe.keeper.app.databinding.FragmentDetailsBinding
-import eating.well.recipe.keeper.app.ui.home.HomeViewModel
-import eating.well.recipe.keeper.app.ui.home.RecipeListEvent
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 private const val TAG = "DetailsFragment"
 
-
 class DetailsFragment : Fragment() {
-    companion object {
-        private const val ARG_RECIPE = "recipe"
-
-        @JvmStatic
-        fun newInstance(recipeEntity: RecipeEntity) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_RECIPE, recipeEntity)
-                }
-            }
-    }
     private var recipeEntity: RecipeEntity? = null
     private var _binding: FragmentDetailsBinding? = null
-    private lateinit var mAdView : AdView
 
     private val homeViewModel: HomeViewModel by sharedViewModel()
 
@@ -48,62 +33,54 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+            recipeEntity = it.getSerializable(ARG_RECIPE) as RecipeEntity
+        }
         setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        // Inflate the layout for this fragment
+        /*return inflater.inflate(
+            R.layout.fragment_details,
+            container,
+            false
+        )*/
+
+
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        initAdmob()
         return binding.root
-    }
 
-    private fun initAdmob() {
-        MobileAds.initialize(requireContext()) {}
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-    }
 
-    override fun onResume() {
-        super.onResume()
-        binding.adView.resume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        binding.adView.pause()
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUpToolbar(view)
         setUpViews()
+
+        /*val textView = view.findViewById<TextView>(R.id.details_title_tv)
+        val bigText: StringBuilder = StringBuilder("Big text")
+        for (i: Int in 1..100) {
+            bigText.append("Text\n")
+        }
+        textView.text = bigText*/
+
     }
 
     private fun setUpViews() {
-        homeViewModel.recipeListEvent.observe(this) {
-            when (it) {
-                is RecipeListEvent.OnRecipeClick -> {
-//                    Log.i(TAG, "OnRecipeClick: ${it.recipeEntity}");
-                    recipeEntity = it.recipeEntity
+        binding.detailsTitleTv.text = recipeEntity?.title
 
-                    binding.detailsTitleTv.text = recipeEntity?.title
+        binding.timeTv.text = recipeEntity?.prepareTime
 
-                    binding.timeTv.text = recipeEntity?.prepareTime
+        setServing()
 
-                    setServing()
+        setIngredients()
 
-                    setIngredients()
+        setMethod()
 
-                    setMethod()
-
-                    setImage()
-                }
-            }
-        }
-
-
+        setImage()
 
         Log.i(TAG, "recipe big image: ${recipeEntity?.detailImage}");
 
@@ -143,7 +120,7 @@ class DetailsFragment : Fragment() {
         recipeEntity?.ingredients?.forEach { ingredients.append("$it\n") }
         ingredients.trim()
         if (ingredients.isNotBlank()) {
-            binding.ingredientsTv.text = ingredients.substring(0, ingredients.length - 1)
+            binding.ingredientsTv.text = ingredients.substring(0,ingredients.length-1)
         }
     }
 
@@ -153,17 +130,25 @@ class DetailsFragment : Fragment() {
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_new_24)
         toolbar.setNavigationOnClickListener {
 //            requireActivity().onBackPressed()
-            Log.i(TAG, ": back");
-            homeViewModel.handleEvent(RecipeListEvent.OnBackClick())
+            homeViewModel.handleEvent(RecipeListEvent.OnOpenHomeFragmentEvent)
         }
         toolbar.title = getString(R.string.recipe)
     }
 
+    companion object {
+        private const val ARG_RECIPE = "recipe"
 
+        @JvmStatic
+        fun newInstance(recipeEntity: RecipeEntity) =
+            DetailsFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(ARG_RECIPE, recipeEntity)
+                }
+            }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.adView.destroy()
         _binding = null
     }
 }

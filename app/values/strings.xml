@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Healthy recipe</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="recipe_name">recipe name</string>
+    <string name="pasta">Pasta</string>
+    <string name="diet">Diet</string>
+    <string name="method">Method</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="time_ease"><![CDATA[Time & Ease]]></string>
+    <string name="cuisine">Cuisine</string>
+    <string name="settings">Settings</string>
+    <string name="show_more_recipes">Show more recipes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="recipe">Recipe</string>
+    <string name="serving">Serving</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to_daily_healthy_recipe_app">Welcome to Daily Healthy Recipe App</string>
+</resources>

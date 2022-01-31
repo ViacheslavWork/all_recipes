@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ActionButton" parent="@android:style/Widget.ActionButton">
+        <item name="android:drawablePadding">@dimen/action_button_padding</item>
+    </style>
+
+    <style name="titleTextAppearance">
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/grafit</item>
+    </style>
+
+    <style name="contentTextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/grafit</item>
+    </style>
+    <style name="greetingTextAppearance">
+        <item name="android:textSize">30sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/grafit</item>
+    </style>
+
+    <style name="servingTextAppearance">
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/grafit</item>
+    </style>
+
+    <style name="itemTextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/grafit</item>
+    </style>
+
+    <style name="groupTextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/yellow</item>
+        <item name="fontFamily">@font/martel_regular</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="Widget.Theme.SimplyRecipes.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+
+
+
+</resources>
