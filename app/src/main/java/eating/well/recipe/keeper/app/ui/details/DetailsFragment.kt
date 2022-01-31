@@ -38,8 +38,6 @@ class DetailsFragment : Fragment() {
     }
     private var recipeEntity: RecipeEntity? = null
     private var _binding: FragmentDetailsBinding? = null
-    private lateinit var mAdView : AdView
-
     private val homeViewModel: HomeViewModel by sharedViewModel()
 
     // This property is only valid between onCreateView and

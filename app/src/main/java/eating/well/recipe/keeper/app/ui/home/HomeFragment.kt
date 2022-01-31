@@ -12,6 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
@@ -53,6 +59,9 @@ class HomeFragment : Fragment() {
 
     private var clickedPosition = 0
 
+    //Interstitial
+    private var interAd: InterstitialAd? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -67,13 +76,64 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 //        downloadRecipes()
 //        writeToFile()
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadInterAd()
+    }
+
+    private fun loadInterAd() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            requireContext(),
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, adError.message)
+                    interAd = null
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d(TAG, "Ad was loaded.")
+                    interAd = interstitialAd
+                }
+            })
+    }
+
+    private fun showInterAd(function: () -> Unit) {
+        if (interAd != null) {
+            interAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    function()
+                    interAd = null
+                    Log.d(TAG, "Ad was dismissed.")
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                    function()
+                    interAd = null
+                    Log.d(TAG, "Ad failed to show.")
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    Log.d(TAG, "Ad showed fullscreen content.")
+                    function()
+                    interAd = null
+                }
+            }
+            interAd?.show(requireActivity())
+        } else {
+            function()
+        }
     }
 
     private fun downloadRecipes() {
@@ -198,15 +258,16 @@ class HomeFragment : Fragment() {
                 is RecipeListEvent.OnRecipeClick -> {
                     clickedPosition = it.position
                     it.getContentIfNotHandled()?.let {
-                        findNavController().navigate(
-                            HomeFragmentDirections.actionHomeFragmentToDetailsFragment()
-                        )
+                        showInterAd {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeFragmentToDetailsFragment()
+                            )
+                        }
                     }
                 }
             }
         })
     }
-
 
     private fun observeState() {
         homeViewModel.recipes.observe(viewLifecycleOwner, {
