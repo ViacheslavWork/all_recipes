@@ -14,6 +14,19 @@
         <!-- Customize your theme here. -->
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+    <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
     <style name="Theme.SimplyRecipes.NoActionBar">

@@ -228,7 +228,8 @@ class HomeFragment : Fragment() {
                 is RecipeListEvent.OnRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
                         }
                     }
                 }

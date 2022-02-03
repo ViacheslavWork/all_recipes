@@ -5,21 +5,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="20dp"
-    android:background="@drawable/rectangle_yellow_shape"
+    android:background="@color/yellowDarkAlpha"
     tools:context=".ui.billing.UnlockFreeFragment">
 
-
-    <Button
-        android:id="@+id/button2"
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_exit_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/unlock_free_tv"
+        android:id="@+id/unlock_free_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/unlock_free"
@@ -38,32 +36,52 @@
         android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unlock_free_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/unlock_free_title_tv" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/unlock_free_content_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/unlock_free_text"
+        android:layout_marginVertical="20dp"
+        android:textAppearance="@style/smallTextAppearance"
+        android:textColor="@color/white"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/watch_video_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/watch_the_video"
+        android:textColor="@color/white"
+        app:iconTint = "@color/white"
+        app:shapeAppearance="@style/ShapeAppearance.App.SmallComponent"
+        app:strokeColor="@color/white"
+        android:textAppearance="@style/buttonTextAppearance"
+        app:icon="@drawable/ic_play"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <ImageView
-        android:id="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/unlock_free_content_tv" />
+    <Button
+        android:id="@+id/open_all_recipes_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_exit_button"
+        app:icon="@drawable/ic_rounded_star"
+        app:backgroundTint="@color/green"
+        app:shapeAppearance="@style/ShapeAppearance.App.SmallComponent"
+        android:textColor="@color/white"
+        app:iconTint = "@color/white"
+        android:textAppearance="@style/buttonTextAppearance"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:text="@string/open_all_recipes"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/watch_video_btn" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

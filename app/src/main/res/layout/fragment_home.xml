@@ -33,6 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/show_more_recipes"
+                style="@style/Theme.SimplyRecipes.NoActionBar"
+                android:textAllCaps="true"
                 android:textSize="12sp"
                 android:layout_marginStart="@dimen/title_margin"
                 app:layout_constraintBottom_toBottomOf="parent"

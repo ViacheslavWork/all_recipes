@@ -1,5 +1,6 @@
 package eating.well.recipe.keeper.app.ui.billing
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,4 +17,7 @@ class UnlockFreeFragment : DialogFragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_unlock_free, container, false)
     }
+
+    override fun getTheme() = R.style.RoundedCornersDialog
+
 }

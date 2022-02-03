@@ -34,4 +34,7 @@
     <string name="banner_id">ca-app-pub-9466555602486169/6097321715</string>
     <string name="interstitial_id">ca-app-pub-9466555602486169/9844995033</string>
     <string name="unlock_free">Unlock free</string>
+    <string name="unlock_free_text">Watch a short video and get this\n Premium-mix</string>
+    <string name="watch_the_video">Watch the video</string>
+    <string name="open_all_recipes">Open all recipes</string>
 </resources>
