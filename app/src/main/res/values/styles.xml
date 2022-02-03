@@ -21,6 +21,10 @@
         <item name="fontFamily">@font/martel_regular</item>
         <item name="color">@color/grafit</item>
     </style>
+    <style name="whiteTextAppearance">
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/white</item>
+    </style>
 
     <style name="servingTextAppearance">
         <item name="android:textSize">10sp</item>

@@ -24,10 +24,18 @@
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_unlockFreeFragment"
+            app:destination="@id/unlockFreeFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="eating.well.recipe.keeper.app.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
+    <dialog
+        android:id="@+id/unlockFreeFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.UnlockFreeFragment"
+        android:label="fragment_unlock_free"
+        tools:layout="@layout/fragment_unlock_free" />
 </navigation>

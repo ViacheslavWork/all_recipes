@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FEC740</color>
     <color name="yellowAlpha">#B3FEC740</color>
+    <color name="yellowDark">#CAA13D</color>
+    <color name="yellowDarkAlpha">#E6CAA13D</color>
     <color name="grafit">#333333</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
