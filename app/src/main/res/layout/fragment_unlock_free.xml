@@ -28,12 +28,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/close_unlock_free_btn" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/unlock_free_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/unlock_placeholder"
         android:layout_margin="20dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unlock_free_title_tv" />
@@ -49,7 +50,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/unlock_free_iv" />
 
     <Button
         android:id="@+id/watch_video_btn"

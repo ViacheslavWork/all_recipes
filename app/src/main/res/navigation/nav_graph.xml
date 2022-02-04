@@ -40,7 +40,11 @@
         android:id="@+id/unlockFreeFragment"
         android:name="eating.well.recipe.keeper.app.ui.billing.UnlockFreeFragment"
         android:label="fragment_unlock_free"
-        tools:layout="@layout/fragment_unlock_free" />
+        tools:layout="@layout/fragment_unlock_free" >
+        <action
+            android:id="@+id/action_unlockFreeFragment_to_goPremiumFragment"
+            app:destination="@id/goPremiumFragment" />
+    </dialog>
     <dialog
         android:id="@+id/goPremiumFragment"
         android:name="eating.well.recipe.keeper.app.ui.billing.GoPremiumFragment"

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isGone
@@ -16,6 +15,7 @@ import com.google.android.gms.ads.MobileAds
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
 import eating.well.recipe.keeper.app.databinding.FragmentDetailsBinding
+import eating.well.recipe.keeper.app.model.Recipe
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import eating.well.recipe.keeper.app.ui.home.RecipeListEvent
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -35,7 +35,7 @@ class DetailsFragment : Fragment() {
                 }
             }
     }
-    private var recipeEntity: RecipeEntity? = null
+    private var recipeEntity: Recipe? = null
     private var _binding: FragmentDetailsBinding? = null
     private val homeViewModel: HomeViewModel by sharedViewModel()
 
@@ -81,8 +81,8 @@ class DetailsFragment : Fragment() {
     private fun setUpViews() {
         homeViewModel.recipeListEvent.observe(this) {
             when (it) {
-                is RecipeListEvent.OnRecipeClick -> {
-                    recipeEntity = it.recipeEntity
+                is RecipeListEvent.OnOpenedRecipeClick -> {
+                    recipeEntity = it.recipe
 
                     binding.detailsTitleTv.text = recipeEntity?.title
 

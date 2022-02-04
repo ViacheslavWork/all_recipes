@@ -10,17 +10,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import eating.well.recipe.keeper.app.R
+import eating.well.recipe.keeper.app.model.Recipe
 
 private const val TAG = "RecipesAdapter"
 
 class RecipesAdapter(
     val event: MutableLiveData<RecipeListEvent> = MutableLiveData()
 ) :
-    ListAdapter<RecipeEntity, MoviesViewHolderList>(MovieDiffCallback()) {
+    ListAdapter<Recipe, MoviesViewHolderList>(MovieDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolderList {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_recipe, parent, false)
@@ -28,9 +28,13 @@ class RecipesAdapter(
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolderList, position: Int) {
-        getItem(position).let { recipeEntity -> holder.onBind(recipeEntity) }
+        getItem(position).let { recipe -> holder.onBind(recipe) }
         holder.itemView.setOnClickListener {
-            event.value = RecipeListEvent.OnRecipeClick(getItem(position), position)
+            if (getItem(position).isPremium) {
+                event.value = RecipeListEvent.OnClosedRecipeClick(getItem(position), position)
+            } else {
+                event.value = RecipeListEvent.OnOpenedRecipeClick(getItem(position), position)
+            }
         }
     }
 }
@@ -38,6 +42,7 @@ class RecipesAdapter(
 class MoviesViewHolderList(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val receiptTV: TextView = itemView.findViewById(R.id.tv_receipt_name)
     private val receiptImage: ImageView = itemView.findViewById(R.id.iv_receipt_card)
+    private val premiumImage: ImageView = itemView.findViewById(R.id.premium_label_iv)
 
     companion object {
         private val imageOption = RequestOptions()
@@ -45,23 +50,41 @@ class MoviesViewHolderList(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .fallback(R.drawable.place_holder)
     }
 
-    fun onBind(recipeEntity: RecipeEntity) {
-        receiptTV.text = recipeEntity.title
-        val bigImage = recipeEntity.detailImage.split("/")
-        val smallImage = recipeEntity.image.split("/")
+    fun onBind(recipe: Recipe) {
+        receiptTV.text = recipe.title
+        if (recipe.isPremium) {
+            makeClosed()
+        } else {
+            makeOpen()
+        }
+
+        val bigImage = recipe.detailImage.split("/")
+        val smallImage = recipe.image.split("/")
         Glide.with(itemView.context)
             .load(Uri.parse("file:///android_asset/small_images/${smallImage[smallImage.size - 1]}"))
             .error("file:///android_asset/big_images/${bigImage[bigImage.size - 1]}")
             .apply(imageOption)
             .into(receiptImage)
     }
+
+    private fun makeClosed() {
+        receiptTV.alpha = 0.5F
+        receiptImage.alpha = 0.5F
+        premiumImage.visibility = View.VISIBLE
+    }
+
+    private fun makeOpen() {
+        receiptTV.alpha = 1.0F
+        receiptImage.alpha = 1.0F
+        premiumImage.visibility = View.GONE
+    }
 }
 
 
-private class MovieDiffCallback : DiffUtil.ItemCallback<RecipeEntity>() {
-    override fun areItemsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
+private class MovieDiffCallback : DiffUtil.ItemCallback<Recipe>() {
+    override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
         (oldItem.id == newItem.id)
 
-    override fun areContentsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
+    override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
         (oldItem == newItem)
 }

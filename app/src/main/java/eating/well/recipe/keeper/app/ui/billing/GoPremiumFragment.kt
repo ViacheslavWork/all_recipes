@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
 import eating.well.recipe.keeper.app.databinding.FragmentGoPremiumBinding
+import eating.well.recipe.keeper.app.model.Recipe
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -104,7 +105,7 @@ class GoPremiumFragment : DialogFragment() {
     }
 }
 
-class ImagesAdapter : ListAdapter<RecipeEntity, RecipeImageViewHolder>(MovieDiffCallback()) {
+class ImagesAdapter : ListAdapter<Recipe, RecipeImageViewHolder>(RecipeDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeImageViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_recipe_image, parent, false)
@@ -112,7 +113,7 @@ class ImagesAdapter : ListAdapter<RecipeEntity, RecipeImageViewHolder>(MovieDiff
     }
 
     override fun onBindViewHolder(holder: RecipeImageViewHolder, position: Int) {
-        getItem(position).let { recipeEntity -> holder.onBind(recipeEntity) }
+        getItem(position).let { recipe -> holder.onBind(recipe) }
     }
 }
 
@@ -125,9 +126,9 @@ class RecipeImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             .fallback(R.drawable.unlock_placeholder)
     }
 
-    fun onBind(recipeEntity: RecipeEntity) {
-        val bigImage = recipeEntity.detailImage.split("/")
-        val smallImage = recipeEntity.image.split("/")
+    fun onBind(recipe: Recipe) {
+        val bigImage = recipe.detailImage.split("/")
+        val smallImage = recipe.image.split("/")
         Glide.with(itemView.context)
             .load(Uri.parse("file:///android_asset/small_images/${smallImage[smallImage.size - 1]}"))
             .centerCrop()
@@ -137,11 +138,11 @@ class RecipeImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     }
 }
 
-private class MovieDiffCallback : DiffUtil.ItemCallback<RecipeEntity>() {
-    override fun areItemsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
+private class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {
+    override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
         (oldItem.id == newItem.id)
 
-    override fun areContentsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
+    override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean =
         (oldItem == newItem)
 }
 

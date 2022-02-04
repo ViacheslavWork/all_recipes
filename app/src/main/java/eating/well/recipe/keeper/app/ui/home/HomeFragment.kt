@@ -19,9 +19,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
-import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
-import eating.well.recipe.keeper.app.utils.RecipeParser.putRecipesFun
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -66,7 +64,12 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         loadInterAd()
-        binding.adToolbarIv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.ad_animation))
+        binding.adToolbarIv.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.ad_animation
+            )
+        )
         super.onResume()
     }
 
@@ -116,6 +119,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+/*
     private fun downloadRecipes() {
         GlobalScope.launch {
             homeViewModel.deleteAllRecipes()
@@ -157,6 +161,7 @@ class HomeFragment : Fragment() {
             )
         }
     }
+*/
 
     private fun writeToFile() {
         GlobalScope.launch {
@@ -206,15 +211,14 @@ class HomeFragment : Fragment() {
         binding.showMoreRecipesBtn.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnShowMoreRecipesClick) }
         binding.gridToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnGridClick) }
         binding.rectangleToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick) }
-        binding.adToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnAdClick) }
+        binding.adToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnAdClick()) }
     }
-
 
 
     private fun observeEvent() {
         homeViewModel.recipeListEvent.observe(this, {
             when (it) {
-                is RecipeListEvent.OnRecipeClick -> {
+                is RecipeListEvent.OnOpenedRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
                             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
@@ -222,6 +226,17 @@ class HomeFragment : Fragment() {
 //                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
 //                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTermsConditionsFragment())
                         }
+                    }
+                }
+                is RecipeListEvent.OnClosedRecipeClick -> {
+                    it.getContentIfNotHandled()?.let {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
+                    }
+                }
+                is RecipeListEvent.OnAdClick -> {
+                    if (!it.hasBeenHandled) {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
+                        it.setHandled()
                     }
                 }
             }
