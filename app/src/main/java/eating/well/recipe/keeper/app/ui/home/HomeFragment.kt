@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -64,8 +65,14 @@ class HomeFragment : Fragment() {
     }
 
     override fun onResume() {
-        super.onResume()
         loadInterAd()
+        binding.adToolbarIv.startAnimation(AnimationUtils.loadAnimation(context, R.anim.ad_animation))
+        super.onResume()
+    }
+
+    override fun onPause() {
+        binding.adToolbarIv.clearAnimation()
+        super.onPause()
     }
 
     private fun loadInterAd() {
@@ -201,6 +208,7 @@ class HomeFragment : Fragment() {
         binding.rectangleToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick) }
         binding.adToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnAdClick) }
     }
+
 
 
     private fun observeEvent() {
