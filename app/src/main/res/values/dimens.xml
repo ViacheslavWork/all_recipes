@@ -9,4 +9,5 @@
     <dimen name="content_text_margin">20dp</dimen>
     <dimen name="title_margin">10dp</dimen>
     <dimen name="margin_go_premium">20dp</dimen>
+    <dimen name="margin_menu_item_toolbar_home">16dp</dimen>
 </resources>

@@ -127,6 +127,7 @@ class DetailsFragment : Fragment() {
         recipeEntity?.method?.forEachIndexed { index, methodPointEntity ->
             methodPoints.append("${index + 1}. ${methodPointEntity.title}\n")
             methodPoints.append("${methodPointEntity.content}\n")
+            methodPoints.append("\n")
         }
         binding.methodTv.text = methodPoints
     }

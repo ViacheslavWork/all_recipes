@@ -1,11 +1,11 @@
 package eating.well.recipe.keeper.app.ui.home
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -159,69 +159,49 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         layoutManager = GridLayoutManager(context, 2)
-        setUpRecyclerView(view, layoutManager)
+        setUpRecyclerView(layoutManager)
         setUpAdapter()
-        setUpToolbar(view)
+        setUpToolbar()
 
-        observeLayoutState(view)
+        observeLayoutState()
         observeState()
         observeEvent()
     }
 
-    private fun observeLayoutState(view: View) {
+    private fun observeLayoutState() {
         homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
             if (it) {
                 val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = GridLayoutManager(context, 2)
                 layoutManager.onRestoreInstanceState(currentPosition)
-                setUpRecyclerView(view, layoutManager)
+                setUpRecyclerView(layoutManager)
+
+                binding.rectangleToolbarIv.setImageResource(R.drawable.ic_rectangle)
+                binding.gridToolbarIv.setImageResource(R.drawable.ic_grid_clicked)
             } else {
                 val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = LinearLayoutManager(context)
                 layoutManager.onRestoreInstanceState(currentPosition)
-                setUpRecyclerView(view, layoutManager)
+                setUpRecyclerView(layoutManager)
+
+                binding.rectangleToolbarIv.setImageResource(R.drawable.ic_rectangle_clicked)
+                binding.gridToolbarIv.setImageResource(R.drawable.ic_grid)
             }
         }
     }
 
-    private fun setUpRecyclerView(view: View, layoutManager: RecyclerView.LayoutManager) {
-        recyclerView = view.findViewById(R.id.rv_recipe_cards)
+    private fun setUpRecyclerView(layoutManager: RecyclerView.LayoutManager) {
+        recyclerView = binding.rvRecipeCards
         recyclerView.layoutManager = layoutManager
     }
 
-    private fun setUpToolbar(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.recipes_toolbar)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-        actionBar?.setDisplayShowTitleEnabled(false)
-        val moreRecipesButton = view.findViewById<Button>(R.id.show_more_recipes_btn)
-        moreRecipesButton.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnShowMoreRecipesClick) }
+    private fun setUpToolbar() {
+        binding.showMoreRecipesBtn.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnShowMoreRecipesClick) }
+        binding.gridToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnGridClick) }
+        binding.rectangleToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick) }
+        binding.adToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnAdClick) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.recipes_list_menu, menu)
-        rectangleMenuItem = menu.findItem(R.id.rectangle_mi)
-        gridMenuItem = menu.findItem(R.id.grid_mi)
-        homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
-            if (it) {
-                menu.findItem(R.id.grid_mi).setIcon(R.drawable.ic_grid_clicked)
-                menu.findItem(R.id.rectangle_mi).setIcon(R.drawable.ic_rectangle)
-            } else {
-                menu.findItem(R.id.grid_mi).setIcon(R.drawable.ic_grid)
-                menu.findItem(R.id.rectangle_mi).setIcon(R.drawable.ic_rectangle_clicked)
-            }
-        }
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.rectangle_mi -> homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick)
-            R.id.grid_mi -> homeViewModel.handleEvent(RecipeListEvent.OnGridClick)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun observeEvent() {
         homeViewModel.recipeListEvent.observe(this, {
@@ -229,9 +209,9 @@ class HomeFragment : Fragment() {
                 is RecipeListEvent.OnRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
-//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
 //                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
 //                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTermsConditionsFragment())
                         }
                     }

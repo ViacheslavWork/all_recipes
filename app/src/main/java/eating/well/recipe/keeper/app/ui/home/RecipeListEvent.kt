@@ -34,5 +34,6 @@ sealed class RecipeListEvent {
     object OnShowMoreRecipesClick : RecipeListEvent()
     object OnRectangleClick : RecipeListEvent()
     object OnGridClick : RecipeListEvent()
+    object OnAdClick : RecipeListEvent()
     object OnOpenHomeFragmentEvent : RecipeListEvent()
 }

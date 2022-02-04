@@ -71,6 +71,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
             RecipeListEvent.OnGridClick -> _isLayoutGrid.value = true
             RecipeListEvent.OnRectangleClick -> _isLayoutGrid.value = false
             RecipeListEvent.OnOpenHomeFragmentEvent -> mutableRecipeListEvent.value = event
+            RecipeListEvent.OnAdClick -> {}
         }
     }
 }
