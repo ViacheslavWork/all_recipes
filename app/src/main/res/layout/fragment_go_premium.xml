@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellowDarkAlpha">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.billing.UnlockFreeFragment">
+
+        <ImageView
+            android:id="@+id/cross_go_premium_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_go_premium"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_exit_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/go_premium_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_premium"
+            android:textAppearance="@style/whiteTextAppearance"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cross_go_premium_iv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/go_premium_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/go_premium_title_tv"
+            tools:layout_editor_absoluteX="20dp"
+            tools:listitem="@layout/item_recipe_image" />
+
+        <ImageView
+            android:id="@+id/go_premium_check_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_go_premium"
+            android:src="@drawable/ic_offers_for_premium"
+            android:text="@string/unlock_free_text"
+            android:textAppearance="@style/smallTextAppearance"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/go_premium_rv" />
+
+        <Button
+            android:id="@+id/try_for_free_btn"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_go_premium"
+            android:layout_marginVertical="30dp"
+            android:text="@string/try_for_free_7_days"
+            android:textAppearance="@style/buttonTextAppearance"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/go_premium_check_tv"
+            app:shapeAppearance="@style/ShapeAppearance.App.SmallComponent" />
+
+        <Button
+            android:id="@+id/per_month_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_go_premium"
+            android:layout_marginVertical="10dp"
+            android:text="@string/prise_per_month"
+            android:textAppearance="@style/buttonTextAppearance"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/try_for_free_btn"
+            app:shapeAppearance="@style/ShapeAppearance.App.SmallComponent"
+            app:strokeColor="@color/white" />
+
+        <TextView
+            android:id="@+id/unlock_free_content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_go_premium"
+            android:text="@string/subscription_text"
+            android:textAppearance="@style/verySmallTextAppearance"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/per_month_btn" />
+
+        <TextView
+            android:id="@+id/subscription_details_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/details"
+            android:textAppearance="@style/verySmallTextAppearance"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unlock_free_content_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

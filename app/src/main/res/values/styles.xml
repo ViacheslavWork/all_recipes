@@ -45,6 +45,10 @@
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/martel_regular</item>
     </style>
+    <style name="verySmallTextAppearance">
+        <item name="android:textSize">9sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+    </style>
 
     <style name="groupTextAppearance">
         <item name="android:textSize">20sp</item>

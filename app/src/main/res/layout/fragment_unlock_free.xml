@@ -9,7 +9,7 @@
     tools:context=".ui.billing.UnlockFreeFragment">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/close_unlock_free_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_exit_button"
@@ -26,7 +26,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/close_unlock_free_btn" />
 
     <ImageView
         android:id="@+id/imageView2"

@@ -214,6 +214,7 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.rectangle_mi -> homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick)
@@ -229,7 +230,9 @@ class HomeFragment : Fragment() {
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
 //                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
-                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTermsConditionsFragment())
                         }
                     }
                 }

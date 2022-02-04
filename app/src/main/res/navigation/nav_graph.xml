@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_unlockFreeFragment"
             app:destination="@id/unlockFreeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_goPremiumFragment"
+            app:destination="@id/goPremiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -38,4 +41,16 @@
         android:name="eating.well.recipe.keeper.app.ui.billing.UnlockFreeFragment"
         android:label="fragment_unlock_free"
         tools:layout="@layout/fragment_unlock_free" />
+    <dialog
+        android:id="@+id/goPremiumFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.GoPremiumFragment"
+        android:label="GoPremiumFragment" >
+        <action
+            android:id="@+id/action_goPremiumFragment_to_termsConditionsFragment"
+            app:destination="@id/termsConditionsFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/termsConditionsFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.TermsConditionsFragment"
+        android:label="TermsConditionsFragment" />
 </navigation>

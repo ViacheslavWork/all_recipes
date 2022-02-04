@@ -33,8 +33,22 @@
     <string name="app_id">ca-app-pub-9466555602486169~6782049121</string>
     <string name="banner_id">ca-app-pub-9466555602486169/6097321715</string>
     <string name="interstitial_id">ca-app-pub-9466555602486169/9844995033</string>
+
     <string name="unlock_free">Unlock free</string>
     <string name="unlock_free_text">Watch a short video and get this\n Premium-mix</string>
     <string name="watch_the_video">Watch the video</string>
     <string name="open_all_recipes">Open all recipes</string>
+    <string name="try_for_free_7_days">Try for free: 7 days\n After $10 per year </string>
+    <string name="prise_per_month">$5 per month</string>
+    <string name="subscription_text">This subscription gives you unlimited access to our app content library. If you don\'t cancel before the trial ends, you will be automatically charged $9.99 each year until you cancel. If you choose the monthly subscription, you will be automatically charged $3.99 each month until you cancel.</string>
+    <string name="details"><u>Details</u></string>
+    <string name="terms_and_conditions_content">
+        By premium, you can:\n\n
+        - Remove ads\n
+        - Unlock all sounds\n\n
+        Premium subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\n\n
+        You can turn off auto-renew at any time from your Google Play Store account settings but refunds will not be provided for any unused portion of the term.\n\n
+        If you cancel a subscription purchased from an app on Google Play, you will not receive a refund for the current billing period, but will continue to receive their subscription content for the remainder of the current billing period, regardless of the cancellation date. The cancellation goes into effect after the current billing period has passed.</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="go_premium">Go Premium</string>
 </resources>
