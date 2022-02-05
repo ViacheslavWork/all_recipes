@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -35,9 +36,9 @@ class UnlockFreeFragment : DialogFragment() {
     }
 
     private fun observeViewModel() {
-        homeViewModel.recipeListEvent.observe(viewLifecycleOwner){
+        homeViewModel.recipeListEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is RecipeListEvent.OnRecipeClick-> {
+                is RecipeListEvent.OnRecipeClick -> {
                     val imageOption = RequestOptions()
                         .placeholder(R.drawable.unlock_placeholder)
                         .fallback(R.drawable.unlock_placeholder)
@@ -56,7 +57,13 @@ class UnlockFreeFragment : DialogFragment() {
 
     private fun setUpViews() {
         binding.closeUnlockFreeBtn.setOnClickListener { requireActivity().onBackPressed() }
-        binding.watchVideoBtn.setOnClickListener { }
+        binding.watchVideoBtn.setOnClickListener {
+            Toast.makeText(
+                context,
+                "What video? What to do after the video?",
+                Toast.LENGTH_LONG
+            ).show()
+        }
         binding.openAllRecipesBtn.setOnClickListener {
             findNavController().navigate(
                 UnlockFreeFragmentDirections.actionUnlockFreeFragmentToGoPremiumFragment()

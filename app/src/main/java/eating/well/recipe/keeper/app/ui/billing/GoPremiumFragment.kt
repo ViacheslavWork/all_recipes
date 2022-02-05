@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import eating.well.recipe.keeper.app.R
-import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
 import eating.well.recipe.keeper.app.databinding.FragmentGoPremiumBinding
 import eating.well.recipe.keeper.app.model.Recipe
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
@@ -52,14 +51,26 @@ class GoPremiumFragment : DialogFragment() {
     }
 
     private fun setUpViews() {
-        binding.crossGoPremiumIv.setOnClickListener {requireActivity().onBackPressed()}
+        binding.crossGoPremiumIv.setOnClickListener { requireActivity().onBackPressed() }
 
         val cs = SpannableStringBuilder(resources.getString(R.string.try_for_free_7_days))
         cs.setSpan(RelativeSizeSpan(0.625f), 20, cs.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.tryForFreeBtn.text = cs
-        binding.tryForFreeBtn.setOnClickListener {}
+        binding.tryForFreeBtn.setOnClickListener {
+            Toast.makeText(
+                context,
+                "What price?",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
-        binding.perMonthBtn.setOnClickListener {}
+        binding.perMonthBtn.setOnClickListener {
+            Toast.makeText(
+                context,
+                "What price?",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
         binding.subscriptionDetailsTv.setOnClickListener {
             findNavController().navigate(

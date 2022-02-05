@@ -19,7 +19,10 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
+import eating.well.recipe.keeper.app.data.database.entity.Category
+import eating.well.recipe.keeper.app.data.database.entity.toRecipe
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
+import eating.well.recipe.keeper.app.utils.RecipeParser.putRecipesFun
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -56,6 +59,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
 //        downloadRecipes()
 //        writeToFile()
 
@@ -119,7 +123,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-/*
     private fun downloadRecipes() {
         GlobalScope.launch {
             homeViewModel.deleteAllRecipes()
@@ -127,41 +130,40 @@ class HomeFragment : Fragment() {
                 putRecipesFun(
                     "https://www.simplyrecipes.com/pasta-recipes-5090999",
                     Category.PASTA
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-diet-5091259",
                     Category.DIET
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-method-5091235",
                     Category.METHOD
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-ingredients-5091192",
                     Category.INGREDIENTS
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-time-and-ease-5090817",
                     Category.TIME_EASE
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/world-cuisine-recipes-5090811",
                     Category.CUISINE
-                )
+                ).map { it.toRecipe() }
             )
         }
     }
-*/
 
     private fun writeToFile() {
         GlobalScope.launch {
