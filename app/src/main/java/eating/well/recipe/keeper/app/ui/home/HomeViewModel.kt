@@ -21,6 +21,9 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     private val mutableRecipeListEvent = MutableLiveData<RecipeListEvent>()
     val recipeListEvent: LiveData<RecipeListEvent> get() = mutableRecipeListEvent
 
+    private val _mutableIsPremium = MutableLiveData<Boolean>(false)
+    val isPremiumLiveData: LiveData<Boolean> get() = _mutableIsPremium
+
     init {
         getRecipesByCategory(Category.PASTA)
 //        writeImagesToFile()
@@ -46,7 +49,18 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getRecipesByCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
-            _recipes.postValue(RecipesState(recipes = repository.getRecipesByCategory(category)))
+            if (isPremiumLiveData.value == true) {
+                _recipes.postValue(RecipesState(recipes = repository.getRecipesByCategory(category)))
+            } else {
+                _recipes.postValue(
+                    RecipesState(
+                        recipes = repository.getRecipesByCategory(category).apply {
+                            forEachIndexed { index, recipe ->
+                                if (index > 2) recipe.isPremium = true
+                            }
+                        })
+                )
+            }
         }
     }
 
@@ -62,6 +76,10 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun changePremiumStatus(isPremium: Boolean) {
+        _mutableIsPremium.postValue(isPremium)
+    }
+
     fun handleEvent(event: RecipeListEvent) {
         when (event) {
             is RecipeListEvent.OnCategoryClick -> getRecipesByCategory(event.category)
@@ -74,5 +92,9 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
             RecipeListEvent.OnRectangleClick -> _isLayoutGrid.value = false
             RecipeListEvent.OnOpenHomeFragmentEvent -> mutableRecipeListEvent.value = event
         }
+    }
+
+    fun makePremium(isPremium: Boolean) {
+        _mutableIsPremium.postValue(isPremium)
     }
 }

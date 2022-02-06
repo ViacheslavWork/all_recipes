@@ -41,10 +41,6 @@ class Repository(
             recipeDao.insertAll(assetManager.readFromAssetFile(fileName = RECIPES_FILE_NAME))
         }
         val recipes = recipeDao.getByCategory(category).map { it.toRecipe() }
-        return recipes.apply {
-            forEachIndexed { index, recipe ->
-                if (index > 2) recipe.isPremium = true
-            }
-        }
+        return recipes
     }
 }

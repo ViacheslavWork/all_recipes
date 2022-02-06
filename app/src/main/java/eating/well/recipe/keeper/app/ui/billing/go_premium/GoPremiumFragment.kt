@@ -1,10 +1,11 @@
-package eating.well.recipe.keeper.app.ui.billing
+package eating.well.recipe.keeper.app.ui.billing.go_premium
 
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.PurchaseInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import eating.well.recipe.keeper.app.R
@@ -24,14 +27,18 @@ import eating.well.recipe.keeper.app.model.Recipe
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
+private const val TAG = "GoPremiumFragment"
+
 
 class GoPremiumFragment : DialogFragment() {
     private val homeViewModel: HomeViewModel by sharedViewModel()
+    private val goPremiumViewModel: GoPremiumViewModel by sharedViewModel()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ImagesAdapter
 
     private var _binding: FragmentGoPremiumBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,29 +55,25 @@ class GoPremiumFragment : DialogFragment() {
         observeState()
 
         setUpViews()
+
+        if (!BillingProcessor.isIabServiceAvailable(context)) {
+            Toast.makeText(
+                context,
+                "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16",
+                Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     private fun setUpViews() {
         binding.crossGoPremiumIv.setOnClickListener { requireActivity().onBackPressed() }
 
+        binding.tryForFreeBtn.setOnClickListener { goPremiumViewModel.handleEvent(GoPremiumEvent(Subscription.YEAR)) }
+        binding.perMonthBtn.setOnClickListener { goPremiumViewModel.handleEvent(GoPremiumEvent(Subscription.MONTH)) }
+
         val cs = SpannableStringBuilder(resources.getString(R.string.try_for_free_7_days))
         cs.setSpan(RelativeSizeSpan(0.625f), 20, cs.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.tryForFreeBtn.text = cs
-        binding.tryForFreeBtn.setOnClickListener {
-            Toast.makeText(
-                context,
-                "What price?",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
-        binding.perMonthBtn.setOnClickListener {
-            Toast.makeText(
-                context,
-                "What price?",
-                Toast.LENGTH_LONG
-            ).show()
-        }
 
         binding.subscriptionDetailsTv.setOnClickListener {
             findNavController().navigate(
@@ -78,9 +81,8 @@ class GoPremiumFragment : DialogFragment() {
             )
         }
     }
-
     private fun observeState() {
-        homeViewModel.recipes.observe(viewLifecycleOwner, {
+        homeViewModel.recipes.observe(viewLifecycleOwner) {
             when {
                 it.error.isNotBlank() -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
@@ -93,7 +95,7 @@ class GoPremiumFragment : DialogFragment() {
                     recyclerView.layoutManager?.scrollToPosition(it.recipes.size / 2)
                 }
             }
-        })
+        }
     }
 
     private fun setUpRecyclerView(view: View, layoutManager: RecyclerView.LayoutManager) {
@@ -108,12 +110,47 @@ class GoPremiumFragment : DialogFragment() {
         recyclerView.adapter = adapter
     }
 
+
     override fun getTheme() = R.style.FullScreenDialogTheme
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    //billing
+/*    override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPurchaseHistoryRestored() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) {
+        Toast.makeText(context, error?.message.toString(), Toast.LENGTH_LONG).show()
+        Log.e(TAG, "onBillingError: $error")
+    }
+
+    override fun onBillingInitialized() {
+        Toast.makeText(context, "Billing initialized", Toast.LENGTH_LONG).show()
+        binding.tryForFreeBtn.setOnClickListener {
+            Toast.makeText(
+                context,
+                "What price?",
+                Toast.LENGTH_LONG
+            ).show()
+
+        }
+        binding.perMonthBtn.setOnClickListener {
+            Toast.makeText(
+                context,
+                "What price?",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }*/
 }
 
 class ImagesAdapter : ListAdapter<Recipe, RecipeImageViewHolder>(RecipeDiffCallback()) {

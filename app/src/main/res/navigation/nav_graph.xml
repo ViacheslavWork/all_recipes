@@ -47,7 +47,7 @@
     </dialog>
     <dialog
         android:id="@+id/goPremiumFragment"
-        android:name="eating.well.recipe.keeper.app.ui.billing.GoPremiumFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.go_premium.GoPremiumFragment"
         android:label="GoPremiumFragment" >
         <action
             android:id="@+id/action_goPremiumFragment_to_termsConditionsFragment"

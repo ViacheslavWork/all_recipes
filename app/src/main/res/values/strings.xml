@@ -34,6 +34,8 @@
     <string name="banner_id">ca-app-pub-9466555602486169/6097321715</string>
     <string name="interstitial_id">ca-app-pub-9466555602486169/9844995033</string>
 
+    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSTBtoQ+FMjcis151oLgP45Zu1COfmbv143gc729qkW4YMhQvXA/qBWNn8jNNe3cgX2MjGjyNCfbNE08KDX3SVkrI3THPWB1ytf3M1szqGQLaI/lGSvMpWmylhSXbeSz1YkuFH2oAgs0qkHezslfurQ3bgpeAC0OtOAnRcDzUySv4izaF4pgOOFYV0YLXnVJWCGkV+EtUs8y0Jk861arX9GmWaCLYK0DuRlIRiFS/J2FegoFhPKwMSNwMukGRyJ6TurnbmpLz8GNRMToB74CrdeZBlOWPafairZN44glWzrxciMKNgIoUp1mxyo3dl3TLb4ZdjVNnpqyqGx193vdHwIDAQAB</string>
+
     <string name="unlock_free">Unlock free</string>
     <string name="unlock_free_text">Watch a short video and get this\n Premium-mix</string>
     <string name="watch_the_video">Watch the video</string>
@@ -51,4 +53,5 @@
         If you cancel a subscription purchased from an app on Google Play, you will not receive a refund for the current billing period, but will continue to receive their subscription content for the remainder of the current billing period, regardless of the cancellation date. The cancellation goes into effect after the current billing period has passed.</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="go_premium">Go Premium</string>
+
 </resources>

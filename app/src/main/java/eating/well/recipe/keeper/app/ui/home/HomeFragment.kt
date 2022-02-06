@@ -68,13 +68,17 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         loadInterAd()
+        startAdAnimation()
+        super.onResume()
+    }
+
+    private fun startAdAnimation() {
         binding.adToolbarIv.startAnimation(
             AnimationUtils.loadAnimation(
                 context,
                 R.anim.ad_animation
             )
         )
-        super.onResume()
     }
 
     override fun onPause() {
@@ -180,7 +184,21 @@ class HomeFragment : Fragment() {
         observeLayoutState()
         observeState()
         observeEvent()
+        observePremium()
     }
+
+    private fun observePremium() {
+        homeViewModel.isPremiumLiveData.observe(viewLifecycleOwner){
+            if (it) {
+                binding.adToolbarIv.clearAnimation()
+                binding.adToolbarIv.visibility = View.GONE
+            } else {
+                binding.adToolbarIv.visibility = View.VISIBLE
+                startAdAnimation()
+            }
+        }
+    }
+
 
     private fun observeLayoutState() {
         homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
