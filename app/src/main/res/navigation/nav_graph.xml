@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_unlockFreeFragment_to_goPremiumFragment"
             app:destination="@id/goPremiumFragment" />
+        <action
+            android:id="@+id/action_unlockFreeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </dialog>
     <dialog
         android:id="@+id/goPremiumFragment"

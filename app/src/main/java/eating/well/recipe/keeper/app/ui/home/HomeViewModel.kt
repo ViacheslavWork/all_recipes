@@ -21,7 +21,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     private val mutableRecipeListEvent = MutableLiveData<RecipeListEvent>()
     val recipeListEvent: LiveData<RecipeListEvent> get() = mutableRecipeListEvent
 
-    private val _mutableIsPremium = MutableLiveData<Boolean>(false)
+    private val _mutableIsPremium = MutableLiveData(false)
     val isPremiumLiveData: LiveData<Boolean> get() = _mutableIsPremium
 
     init {
@@ -74,10 +74,6 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.setRecipes(recipes)
         }
-    }
-
-    fun changePremiumStatus(isPremium: Boolean) {
-        _mutableIsPremium.postValue(isPremium)
     }
 
     fun handleEvent(event: RecipeListEvent) {

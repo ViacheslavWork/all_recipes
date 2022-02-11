@@ -30,24 +30,28 @@
     <string name="banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_test_id">ca-app-pub-3940256099942544/1033173712</string>
 
-    <string name="app_id">ca-app-pub-9466555602486169~6782049121</string>
-    <string name="banner_id">ca-app-pub-9466555602486169/6097321715</string>
-    <string name="interstitial_id">ca-app-pub-9466555602486169/9844995033</string>
+    <string name="app_id">ca-app-pub-1917163978798192~5124743711</string>
+    <string name="banner_id">ca-app-pub-1917163978798192/2498580370</string>
+    <string name="interstitial_id">ca-app-pub-1917163978798192/9993927011</string>
+    <string name="rewarded_id">ca-app-pub-1917163978798192/7040460619</string>
 
-    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSTBtoQ+FMjcis151oLgP45Zu1COfmbv143gc729qkW4YMhQvXA/qBWNn8jNNe3cgX2MjGjyNCfbNE08KDX3SVkrI3THPWB1ytf3M1szqGQLaI/lGSvMpWmylhSXbeSz1YkuFH2oAgs0qkHezslfurQ3bgpeAC0OtOAnRcDzUySv4izaF4pgOOFYV0YLXnVJWCGkV+EtUs8y0Jk861arX9GmWaCLYK0DuRlIRiFS/J2FegoFhPKwMSNwMukGRyJ6TurnbmpLz8GNRMToB74CrdeZBlOWPafairZN44glWzrxciMKNgIoUp1mxyo3dl3TLb4ZdjVNnpqyqGx193vdHwIDAQAB</string>
+    <string name="licence_key_test">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSTBtoQ+FMjcis151oLgP45Zu1COfmbv143gc729qkW4YMhQvXA/qBWNn8jNNe3cgX2MjGjyNCfbNE08KDX3SVkrI3THPWB1ytf3M1szqGQLaI/lGSvMpWmylhSXbeSz1YkuFH2oAgs0qkHezslfurQ3bgpeAC0OtOAnRcDzUySv4izaF4pgOOFYV0YLXnVJWCGkV+EtUs8y0Jk861arX9GmWaCLYK0DuRlIRiFS/J2FegoFhPKwMSNwMukGRyJ6TurnbmpLz8GNRMToB74CrdeZBlOWPafairZN44glWzrxciMKNgIoUp1mxyo3dl3TLb4ZdjVNnpqyqGx193vdHwIDAQAB</string>
+    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo7OErtEJ5M997dyE3c3pHpRBFLDpKHISdJPG0gKpYB52L8mo/mvML31Yo9J7aDXUj4xfMMOLlVs6Pw1BgWGPKSeV5uDIZwNXbh/A+sAVC62VdeGoVJpClI5nmOHCrRJlf8zRCysn/Ohr6+cdkkS7ZB4hCCJz+NLM4VKzMuuUCY4ybhw6YvODdSj7CqQ0dsW5PUT3V+oTNWXihbbcWZNwkUwwrkALR6I3Kuk0g5SA3xTAINYHs26x7M4CRyFXU+N+DbUGYkyLYXudKXpKTx6fIlnxkzXCuiXI5nkyUlR9dVVAbxZ1doWt9zaixFdDJZFFLQFbWsH6nuAbngId9uBpdQIDAQAB</string>
+
+    <string name="purchase_id_test">android.test.purchased</string>
 
     <string name="unlock_free">Unlock free</string>
     <string name="unlock_free_text">Watch a short video and get this\n Premium-mix</string>
     <string name="watch_the_video">Watch the video</string>
     <string name="open_all_recipes">Open all recipes</string>
-    <string name="try_for_free_7_days">Try for free: 7 days\n After $10 per year </string>
-    <string name="prise_per_month">$5 per month</string>
+    <string name="try_for_free_7_days">Try for free: 7 days\n After %s%s per year </string>
+    <string name="prise_per_month">%s%s per month</string>
     <string name="subscription_text">This subscription gives you unlimited access to our app content library. If you don\'t cancel before the trial ends, you will be automatically charged $9.99 each year until you cancel. If you choose the monthly subscription, you will be automatically charged $3.99 each month until you cancel.</string>
     <string name="details"><u>Details</u></string>
     <string name="terms_and_conditions_content">
         By premium, you can:\n\n
         - Remove ads\n
-        - Unlock all sounds\n\n
+        - Unlock all recipes\n\n
         Premium subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period.\n\n
         You can turn off auto-renew at any time from your Google Play Store account settings but refunds will not be provided for any unused portion of the term.\n\n
         If you cancel a subscription purchased from an app on Google Play, you will not receive a refund for the current billing period, but will continue to receive their subscription content for the remainder of the current billing period, regardless of the cancellation date. The cancellation goes into effect after the current billing period has passed.</string>

@@ -1,14 +1,7 @@
 package eating.well.recipe.keeper.app.ui.billing.go_premium
 
-import eating.well.recipe.keeper.app.model.Recipe
-import eating.well.recipe.keeper.app.ui.home.RecipeListEvent
 
-/*sealed class GoPremiumEvent {
-    object YearPremiumEvent: GoPremiumEvent()
-    object MonthPremiumEvent: GoPremiumEvent()
-}*/
-
-class GoPremiumEvent(val subscription: Subscription) {
+class GoPremiumEvent(private val subscription: Subscription) {
     var hasBeenHandled = false
         private set // Allow external read but not write
 

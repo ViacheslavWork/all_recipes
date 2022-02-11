@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onResume() {
-        loadInterAd()
+//        loadInterAd()
         startAdAnimation()
         super.onResume()
     }
@@ -195,6 +195,7 @@ class HomeFragment : Fragment() {
             } else {
                 binding.adToolbarIv.visibility = View.VISIBLE
                 startAdAnimation()
+                loadInterAd()
             }
         }
     }
@@ -236,7 +237,7 @@ class HomeFragment : Fragment() {
 
 
     private fun observeEvent() {
-        homeViewModel.recipeListEvent.observe(this, {
+        homeViewModel.recipeListEvent.observe(viewLifecycleOwner) {
             when (it) {
                 is RecipeListEvent.OnOpenedRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
@@ -248,6 +249,7 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
                 is RecipeListEvent.OnClosedRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
                         findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
@@ -260,11 +262,11 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun observeState() {
-        homeViewModel.recipes.observe(viewLifecycleOwner, {
+        homeViewModel.recipes.observe(viewLifecycleOwner) {
             when {
                 it.error.isNotBlank() -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
@@ -276,16 +278,16 @@ class HomeFragment : Fragment() {
                     adapter.submitList(it.recipes.toMutableList())
                 }
             }
-        })
+        }
     }
 
     private fun setUpAdapter() {
         adapter = RecipesAdapter()
         adapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        adapter.event.observe(viewLifecycleOwner, {
+        adapter.event.observe(viewLifecycleOwner) {
             homeViewModel.handleEvent(it)
-        })
+        }
         recyclerView.adapter = adapter
     }
 

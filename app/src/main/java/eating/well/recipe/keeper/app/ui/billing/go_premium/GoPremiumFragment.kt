@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.RelativeSizeSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.PurchaseInfo
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import eating.well.recipe.keeper.app.R
@@ -28,8 +25,6 @@ import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 private const val TAG = "GoPremiumFragment"
-
-
 class GoPremiumFragment : DialogFragment() {
     private val homeViewModel: HomeViewModel by sharedViewModel()
     private val goPremiumViewModel: GoPremiumViewModel by sharedViewModel()
@@ -53,27 +48,48 @@ class GoPremiumFragment : DialogFragment() {
         setUpRecyclerView(view, layoutManager)
         setUpAdapter()
         observeState()
+        observePrices()
 
         setUpViews()
+    }
 
-        if (!BillingProcessor.isIabServiceAvailable(context)) {
-            Toast.makeText(
-                context,
-                "In-app billing service is unavailable, please upgrade Android Market/Play to version >= 3.9.16",
-                Toast.LENGTH_LONG
-            ).show();
+    private fun observePrices() {
+        goPremiumViewModel.subscriptionInfoLD.observe(viewLifecycleOwner) {
+            binding.perMonthBtn.text = String.format(
+                resources.getString(R.string.prise_per_month),
+                it[Subscription.MONTH]?.first,
+                it[Subscription.MONTH]?.second
+            )
+
+            val yearBtnText = String.format(
+                resources.getString(R.string.try_for_free_7_days),
+                it[Subscription.YEAR]?.first,
+                it[Subscription.YEAR]?.second
+            )
+            val cs = SpannableStringBuilder(yearBtnText)
+            cs.setSpan(RelativeSizeSpan(0.625f), 20, cs.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.tryForFreeBtn.text = cs
         }
+
     }
 
     private fun setUpViews() {
         binding.crossGoPremiumIv.setOnClickListener { requireActivity().onBackPressed() }
 
-        binding.tryForFreeBtn.setOnClickListener { goPremiumViewModel.handleEvent(GoPremiumEvent(Subscription.YEAR)) }
-        binding.perMonthBtn.setOnClickListener { goPremiumViewModel.handleEvent(GoPremiumEvent(Subscription.MONTH)) }
-
-        val cs = SpannableStringBuilder(resources.getString(R.string.try_for_free_7_days))
-        cs.setSpan(RelativeSizeSpan(0.625f), 20, cs.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.tryForFreeBtn.text = cs
+        binding.tryForFreeBtn.setOnClickListener {
+            goPremiumViewModel.handleEvent(
+                GoPremiumEvent(
+                    Subscription.YEAR
+                )
+            )
+        }
+        binding.perMonthBtn.setOnClickListener {
+            goPremiumViewModel.handleEvent(
+                GoPremiumEvent(
+                    Subscription.MONTH
+                )
+            )
+        }
 
         binding.subscriptionDetailsTv.setOnClickListener {
             findNavController().navigate(
@@ -81,6 +97,7 @@ class GoPremiumFragment : DialogFragment() {
             )
         }
     }
+
     private fun observeState() {
         homeViewModel.recipes.observe(viewLifecycleOwner) {
             when {
@@ -119,38 +136,6 @@ class GoPremiumFragment : DialogFragment() {
         _binding = null
     }
 
-    //billing
-/*    override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPurchaseHistoryRestored() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(context, error?.message.toString(), Toast.LENGTH_LONG).show()
-        Log.e(TAG, "onBillingError: $error")
-    }
-
-    override fun onBillingInitialized() {
-        Toast.makeText(context, "Billing initialized", Toast.LENGTH_LONG).show()
-        binding.tryForFreeBtn.setOnClickListener {
-            Toast.makeText(
-                context,
-                "What price?",
-                Toast.LENGTH_LONG
-            ).show()
-
-        }
-        binding.perMonthBtn.setOnClickListener {
-            Toast.makeText(
-                context,
-                "What price?",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }*/
 }
 
 class ImagesAdapter : ListAdapter<Recipe, RecipeImageViewHolder>(RecipeDiffCallback()) {

@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import eating.well.recipe.keeper.app.R
-import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
 import eating.well.recipe.keeper.app.databinding.FragmentDetailsBinding
 import eating.well.recipe.keeper.app.model.Recipe
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
@@ -24,17 +23,6 @@ private const val TAG = "DetailsFragment"
 
 
 class DetailsFragment : Fragment() {
-    companion object {
-        private const val ARG_RECIPE = "recipe"
-
-        @JvmStatic
-        fun newInstance(recipeEntity: RecipeEntity) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_RECIPE, recipeEntity)
-                }
-            }
-    }
     private var recipeEntity: Recipe? = null
     private var _binding: FragmentDetailsBinding? = null
     private val homeViewModel: HomeViewModel by sharedViewModel()
@@ -54,11 +42,10 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        initAdmob()
         return binding.root
     }
 
-    private fun initAdmob() {
+    private fun initBanner() {
         MobileAds.initialize(requireContext()) {}
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -73,15 +60,25 @@ class DetailsFragment : Fragment() {
         super.onPause()
         binding.adView.pause()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUpToolbar(view)
         setUpViews()
+        observeIsPremium()
+    }
+
+    private fun observeIsPremium() {
+        homeViewModel.isPremiumLiveData.observe(viewLifecycleOwner) {
+            if (!it) {
+                initBanner()
+            }
+        }
     }
 
     private fun setUpViews() {
-        homeViewModel.recipeListEvent.observe(this) {
+        homeViewModel.recipeListEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is RecipeListEvent.OnOpenedRecipeClick -> {
+                is RecipeListEvent.OnRecipeClick -> {
                     recipeEntity = it.recipe
 
                     binding.detailsTitleTv.text = recipeEntity?.title
@@ -149,7 +146,6 @@ class DetailsFragment : Fragment() {
         }
         toolbar.title = getString(R.string.recipe)
     }
-
 
 
     override fun onDestroyView() {

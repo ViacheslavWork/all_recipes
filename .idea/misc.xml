@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AdroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_details.xml" value="0.3546875" />
+        <entry key="..\:/AdroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_go_premium.xml" value="0.3546875" />
+        <entry key="..\:/AdroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
+        <entry key="..\:/AdroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_terms_conditions.xml" value="0.3546875" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_details.xml" value="0.3359375" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_go_premium.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_greeting.xml" value="0.3359375" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/fragment_home.xml" value="0.16271442986881937" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/item_recipe.xml" value="0.3359375" />
+        <entry key="..\:/AndroidProjects/allrecipes/allrecipes/app/src/main/res/layout/item_recipe_image.xml" value="0.3359375" />
         <entry key="..\:/Programming/AndroidProjects/allrecipes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21481481481481482" />
         <entry key="..\:/Programming/AndroidProjects/allrecipes/app/src/main/res/drawable/ic_ad.xml" value="0.36512820512820515" />
         <entry key="..\:/Programming/AndroidProjects/allrecipes/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.32592592592592595" />
@@ -48,7 +58,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
