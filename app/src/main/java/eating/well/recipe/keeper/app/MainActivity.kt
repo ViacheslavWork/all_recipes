@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.BillingProcessor.IPurchasesResponseListener
 import com.anjlab.android.iab.v3.PurchaseInfo
@@ -17,15 +18,19 @@ import eating.well.recipe.keeper.app.ui.billing.go_premium.GoPremiumViewModel
 import eating.well.recipe.keeper.app.ui.billing.go_premium.Subscription
 import eating.well.recipe.keeper.app.ui.home.HomeViewModel
 import eating.well.recipe.keeper.app.ui.home.RecipeListEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     companion object {
-        private const val TAG = "MainActivity"
+        private const val TAG = "MainActivityLog"
         private const val LICENCE_KEY = R.string.licence_key
         private const val SUBSCRIPTION_ID_TEST = R.string.purchase_id_test
-        private const val SUBSCRIPTION_ID_MONTH = "android.test.purchased"
-        private const val SUBSCRIPTION_ID_YEAR = "android.test.purchased"
+        private const val SUBSCRIPTION_ID_MONTH = "month_subscription"
+        private const val SUBSCRIPTION_ID_YEAR = "year_subscription"
+
     }
 
     private val homeViewModel: HomeViewModel by viewModel()
@@ -34,14 +39,6 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     private lateinit var binding: ActivityMainBinding
 
     private var bp: BillingProcessor? = null
-
-    var subscriptionMonthInfo: PurchaseInfo? = null
-    var subscriptionYearInfo: PurchaseInfo? = null
-
-    var isMonthSubscribed: Boolean? = false
-    var isYearSubscribed: Boolean? = false
-
-    var isMonthPurchased: Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,16 +113,12 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     private fun observeGoPremiumEvents() {
         goPremiumViewModel.goPremiumEvent.observe(this) {
             it.getContentIfNotHandled()?.let { subscription ->
-                if (bp?.isSubscriptionUpdateSupported == false) {
-                    showToast("Subscriptions are not supported")
-                } else {
+                if (bp?.isSubscriptionUpdateSupported == true) {
                     when (subscription) {
                         Subscription.MONTH -> {
-                            showToast("Month subscription")
                             bp?.subscribe(this, SUBSCRIPTION_ID_MONTH)
                         }
                         Subscription.YEAR -> {
-                            showToast("Year subscription")
                             bp?.subscribe(this, SUBSCRIPTION_ID_YEAR)
                         }
                     }
@@ -142,102 +135,74 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     }
 
     private fun updateSubscriptionStatus() {
-        Log.i(TAG, "updateSubscriptionStatus: ")
         bp?.loadOwnedPurchasesFromGoogleAsync(object : IPurchasesResponseListener {
             override fun onPurchasesSuccess() {
-                showToast("Subscriptions updated.")
             }
 
             override fun onPurchasesError() {
-                showToast("Subscriptions update error.")
             }
         })
         homeViewModel.makePremium(isPremium = hasSubscription())
-//        homeViewModel.makePremium(isPremium = true)
-
-
-        /*isMonthPurchased = bp?.isPurchased(SUBSCRIPTION_ID_MONTH)
-
-        isMonthSubscribed?.let { homeViewModel.makePremium(it) }
-
-        Log.i(TAG, "isYearSubscribed: $isYearSubscribed")
-        Log.i(TAG, "isMonthSubscribed: $isMonthSubscribed")
-
-        Log.i(TAG, "isMonthPurchased: $isMonthPurchased")
-        bp?.getPurchaseListingDetailsAsync(SUBSCRIPTION_ID_MONTH,object :ISkuDetailsResponseListener{
-            override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
-                Log.i(TAG, "Month purchase details: $products")
-            }
-
-            override fun onSkuDetailsError(error: String?) {
-                Log.i(TAG, "Month purchase details: error")
-            }
-        })
-
-        Log.i(TAG, "autorenewing: ${bp?.getSubscriptionPurchaseInfo(SUBSCRIPTION_ID_MONTH)?.purchaseData?.autoRenewing}")
-
-*/
     }
 
     override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
         //call after purchase
-        showToast("Subscription COMPLETED")
-        Log.i(TAG, "onProductPurchased: ")
         updateSubscriptionStatus()
     }
 
     override fun onPurchaseHistoryRestored() {
         //called when owned products restored
-        Log.i(TAG, "onPurchaseHistoryRestored: ")
-        showToast("Subscription history RESTORED")
-        updateSubscriptionStatus()
+        lifecycleScope.launch(Dispatchers.IO) {
+            for (i in 1..2) {
+                delay(1000)
+                updateSubscriptionStatus()
+                homeViewModel.updateList()
+            }
+        }
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        showToast("Billing Error:${error?.message.toString()}")
-        Log.e(TAG, "onBillingError:$errorCode  $error")
         getSubscriptionsPrice()
     }
 
     override fun onBillingInitialized() {
-        Log.i(TAG, "onBillingInitialized: ")
-        updateSubscriptionStatus()
         observeGoPremiumEvents()
         getSubscriptionsPrice()
-
-        if (bp?.isSubscriptionUpdateSupported == false) {
-            //TODO something if user can't subscribe
-            showToast("Subscriptions are not supported")
-        }
-
+        updateSubscriptionStatus()
     }
 
     private fun getSubscriptionsPrice() {
-        var monthPrice: Pair<String, String> = Pair("$","5")
-        var yearPrice: Pair<String, String> = Pair("$","10")
+        var monthPrice: Pair<String, String> = Pair("$", "--")
+        var yearPrice: Pair<String, String> = Pair("$", "--")
+        goPremiumViewModel.putSubscriptionsInfo(Subscription.MONTH, monthPrice)
+        goPremiumViewModel.putSubscriptionsInfo(Subscription.YEAR, yearPrice)
 
-        bp?.getSubscriptionListingDetailsAsync(SUBSCRIPTION_ID_MONTH,object :BillingProcessor.ISkuDetailsResponseListener{
-            override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
-                val product = products?.get(0)
-                monthPrice = Pair(product?.currency!!, product.priceText)
-            }
-            override fun onSkuDetailsError(error: String?) {
-                showToast("Can't download actual price")
-            }
-        })
-        bp?.getSubscriptionListingDetailsAsync(SUBSCRIPTION_ID_YEAR,object :BillingProcessor.ISkuDetailsResponseListener{
-            override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
-                val product = products?.get(0)
-                yearPrice = Pair(product?.currency!!, product.priceText)
-            }
-            override fun onSkuDetailsError(error: String?) {
-//                showToast("Can't download actual price")
-            }
-        })
-        val subscriptionsInfo: HashMap<Subscription,Pair<String, String>> = HashMap()
-        subscriptionsInfo[Subscription.MONTH] = monthPrice
-        subscriptionsInfo[Subscription.YEAR] = yearPrice
-        goPremiumViewModel.putSubscriptionsInfo(subscriptionsInfo)
+        bp?.getSubscriptionListingDetailsAsync(SUBSCRIPTION_ID_MONTH,
+            object : BillingProcessor.ISkuDetailsResponseListener {
+                override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
+                    if (products?.size != 0) {
+                        val product = products?.get(0)
+                        monthPrice = Pair(product?.currency!!, product.priceText)
+                        goPremiumViewModel.putSubscriptionsInfo(Subscription.MONTH, monthPrice)
+                    }
+                }
+
+                override fun onSkuDetailsError(error: String?) {
+                }
+            })
+        bp?.getSubscriptionListingDetailsAsync(SUBSCRIPTION_ID_YEAR,
+            object : BillingProcessor.ISkuDetailsResponseListener {
+                override fun onSkuDetailsResponse(products: MutableList<SkuDetails>?) {
+                    if (products?.size != 0) {
+                        val product = products?.get(0)
+                        yearPrice = Pair(product?.currency!!, product.priceText)
+                        goPremiumViewModel.putSubscriptionsInfo(Subscription.YEAR, yearPrice)
+                    }
+                }
+
+                override fun onSkuDetailsError(error: String?) {
+                }
+            })
     }
 
     override fun onDestroy() {
@@ -247,5 +212,11 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showLog(message: String) {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, message)
+        }
     }
 }

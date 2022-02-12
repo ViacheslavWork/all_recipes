@@ -57,18 +57,22 @@ class GoPremiumFragment : DialogFragment() {
         goPremiumViewModel.subscriptionInfoLD.observe(viewLifecycleOwner) {
             binding.perMonthBtn.text = String.format(
                 resources.getString(R.string.prise_per_month),
-                it[Subscription.MONTH]?.first,
                 it[Subscription.MONTH]?.second
             )
 
             val yearBtnText = String.format(
                 resources.getString(R.string.try_for_free_7_days),
-                it[Subscription.YEAR]?.first,
                 it[Subscription.YEAR]?.second
             )
             val cs = SpannableStringBuilder(yearBtnText)
             cs.setSpan(RelativeSizeSpan(0.625f), 20, cs.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             binding.tryForFreeBtn.text = cs
+
+            binding.unlockFreeContentTv.text = String.format(
+                resources.getString(R.string.subscription_text),
+                it[Subscription.YEAR]?.second,
+                it[Subscription.MONTH]?.second
+            )
         }
 
     }

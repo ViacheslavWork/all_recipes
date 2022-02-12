@@ -1,6 +1,5 @@
 package eating.well.recipe.keeper.app.utils
 
-import android.util.Log
 import eating.well.recipe.keeper.app.data.database.entity.Category
 import eating.well.recipe.keeper.app.data.database.entity.MethodPointEntity
 import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity

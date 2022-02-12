@@ -44,9 +44,9 @@
     <string name="unlock_free_text">Watch a short video and get this\n Premium-mix</string>
     <string name="watch_the_video">Watch the video</string>
     <string name="open_all_recipes">Open all recipes</string>
-    <string name="try_for_free_7_days">Try for free: 7 days\n After %s%s per year </string>
-    <string name="prise_per_month">%s%s per month</string>
-    <string name="subscription_text">This subscription gives you unlimited access to our app content library. If you don\'t cancel before the trial ends, you will be automatically charged $9.99 each year until you cancel. If you choose the monthly subscription, you will be automatically charged $3.99 each month until you cancel.</string>
+    <string name="try_for_free_7_days">Try for free: 7 days\n After %s per year </string>
+    <string name="prise_per_month">%s per month</string>
+    <string name="subscription_text">This subscription gives you unlimited access to our app content library. If you don\'t cancel before the trial ends, you will be automatically charged %s each year until you cancel. If you choose the monthly subscription, you will be automatically charged %s each month until you cancel.</string>
     <string name="details"><u>Details</u></string>
     <string name="terms_and_conditions_content">
         By premium, you can:\n\n

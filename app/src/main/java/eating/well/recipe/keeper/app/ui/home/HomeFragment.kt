@@ -38,8 +38,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var layoutManager: RecyclerView.LayoutManager
 
-    private lateinit var rectangleMenuItem: MenuItem
-    private lateinit var gridMenuItem: MenuItem
 
     //Interstitial
     private var interAd: InterstitialAd? = null
@@ -67,8 +65,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onResume() {
-//        loadInterAd()
-        startAdAnimation()
+        observePremium()
         super.onResume()
     }
 

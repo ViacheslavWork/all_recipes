@@ -40,7 +40,6 @@ class Repository(
         if (recipeDao.getAll().isEmpty()) {
             recipeDao.insertAll(assetManager.readFromAssetFile(fileName = RECIPES_FILE_NAME))
         }
-        val recipes = recipeDao.getByCategory(category).map { it.toRecipe() }
-        return recipes
+        return recipeDao.getByCategory(category).map { it.toRecipe() }
     }
 }

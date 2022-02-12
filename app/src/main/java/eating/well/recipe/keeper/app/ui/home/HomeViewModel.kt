@@ -29,6 +29,10 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
 //        writeImagesToFile()
     }
 
+    fun updateList() {
+        getRecipesByCategory(Category.PASTA)
+    }
+
     private fun writeImagesToFile() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.writeImagesToExternalStorage()
