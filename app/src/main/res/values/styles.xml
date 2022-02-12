@@ -52,7 +52,7 @@
 
     <style name="groupTextAppearance">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/yellow</item>
+        <item name="android:textColor">@color/brown</item>
         <item name="fontFamily">@font/martel_regular</item>
     </style>
 

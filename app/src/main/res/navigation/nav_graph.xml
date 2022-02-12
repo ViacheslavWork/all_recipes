@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/greetingFragment"
-        android:name="eating.well.recipe.keeper.app.ui.greating.GreetingFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.greating.GreetingFragment"
         android:label="fragment_greeting"
         tools:layout="@layout/fragment_greeting" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="eating.well.recipe.keeper.app.ui.home.HomeFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -33,12 +33,12 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="eating.well.recipe.keeper.app.ui.details.DetailsFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
     <dialog
         android:id="@+id/unlockFreeFragment"
-        android:name="eating.well.recipe.keeper.app.ui.billing.UnlockFreeFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.billing.UnlockFreeFragment"
         android:label="fragment_unlock_free"
         tools:layout="@layout/fragment_unlock_free" >
         <action
@@ -50,7 +50,7 @@
     </dialog>
     <dialog
         android:id="@+id/goPremiumFragment"
-        android:name="eating.well.recipe.keeper.app.ui.billing.go_premium.GoPremiumFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.billing.go_premium.GoPremiumFragment"
         android:label="GoPremiumFragment" >
         <action
             android:id="@+id/action_goPremiumFragment_to_termsConditionsFragment"
@@ -58,6 +58,6 @@
     </dialog>
     <dialog
         android:id="@+id/termsConditionsFragment"
-        android:name="eating.well.recipe.keeper.app.ui.billing.TermsConditionsFragment"
+        android:name="eating.well.recipe.keeper.apps.ui.billing.TermsConditionsFragment"
         android:label="TermsConditionsFragment" />
 </navigation>
