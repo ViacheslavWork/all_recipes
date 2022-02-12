@@ -1,7 +1,7 @@
 package eating.well.recipe.keeper.app.ui.home
 
 import eating.well.recipe.keeper.app.data.database.entity.Category
-import eating.well.recipe.keeper.app.data.database.entity.RecipeEntity
+import eating.well.recipe.keeper.app.model.Recipe
 
 sealed class RecipeListEvent {
     var hasBeenHandled = false
@@ -11,24 +11,29 @@ sealed class RecipeListEvent {
         hasBeenHandled = true
     }
 
-    data class OnRecipeClick(val recipeEntity: RecipeEntity, val position: Int) : RecipeListEvent() {
+    abstract class OnRecipeClick(val recipe: Recipe, val position: Int) : RecipeListEvent() {
         /**
          * Returns the content and prevents its use again.
          */
-        fun getContentIfNotHandled(): RecipeEntity? {
+        fun getContentIfNotHandled(): Recipe? {
             return if (hasBeenHandled) {
                 null
             } else {
                 hasBeenHandled = true
-                recipeEntity
+                recipe
             }
         }
 
         /**
          * Returns the content, even if it's already been handled.
          */
-        fun peekRecipeEntity(): RecipeEntity = recipeEntity
+        fun peekRecipeEntity(): Recipe = recipe
     }
+
+    class OnOpenedRecipeClick(recipe: Recipe, position: Int) : OnRecipeClick(recipe, position)
+    class OnClosedRecipeClick(recipe: Recipe, position: Int) : OnRecipeClick(recipe, position)
+    class OnAdClick : RecipeListEvent()
+
     data class OnCategoryClick(val category: Category) : RecipeListEvent()
     class OnBackClick : RecipeListEvent()
     object OnShowMoreRecipesClick : RecipeListEvent()

@@ -1,11 +1,12 @@
 package eating.well.recipe.keeper.app.ui.home
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +20,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import eating.well.recipe.keeper.app.R
 import eating.well.recipe.keeper.app.data.database.entity.Category
+import eating.well.recipe.keeper.app.data.database.entity.toRecipe
 import eating.well.recipe.keeper.app.databinding.FragmentHomeBinding
 import eating.well.recipe.keeper.app.utils.RecipeParser.putRecipesFun
 import kotlinx.coroutines.GlobalScope
@@ -36,8 +38,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var layoutManager: RecyclerView.LayoutManager
 
-    private lateinit var rectangleMenuItem: MenuItem
-    private lateinit var gridMenuItem: MenuItem
 
     //Interstitial
     private var interAd: InterstitialAd? = null
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
 //        downloadRecipes()
 //        writeToFile()
 
@@ -64,8 +65,22 @@ class HomeFragment : Fragment() {
     }
 
     override fun onResume() {
+        observePremium()
         super.onResume()
-        loadInterAd()
+    }
+
+    private fun startAdAnimation() {
+        binding.adToolbarIv.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.ad_animation
+            )
+        )
+    }
+
+    override fun onPause() {
+        binding.adToolbarIv.clearAnimation()
+        super.onPause()
     }
 
     private fun loadInterAd() {
@@ -116,37 +131,37 @@ class HomeFragment : Fragment() {
                 putRecipesFun(
                     "https://www.simplyrecipes.com/pasta-recipes-5090999",
                     Category.PASTA
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-diet-5091259",
                     Category.DIET
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-method-5091235",
                     Category.METHOD
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-ingredients-5091192",
                     Category.INGREDIENTS
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/recipes-by-time-and-ease-5090817",
                     Category.TIME_EASE
-                )
+                ).map { it.toRecipe() }
             )
             homeViewModel.putRecipes(
                 putRecipesFun(
                     "https://www.simplyrecipes.com/world-cuisine-recipes-5090811",
                     Category.CUISINE
-                )
+                ).map { it.toRecipe() }
             )
         }
     }
@@ -159,85 +174,96 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         layoutManager = GridLayoutManager(context, 2)
-        setUpRecyclerView(view, layoutManager)
+        setUpRecyclerView(layoutManager)
         setUpAdapter()
-        setUpToolbar(view)
+        setUpToolbar()
 
-        observeLayoutState(view)
+        observeLayoutState()
         observeState()
         observeEvent()
+        observePremium()
     }
 
-    private fun observeLayoutState(view: View) {
+    private fun observePremium() {
+        homeViewModel.isPremiumLiveData.observe(viewLifecycleOwner){
+            if (it) {
+                binding.adToolbarIv.clearAnimation()
+                binding.adToolbarIv.visibility = View.GONE
+            } else {
+                binding.adToolbarIv.visibility = View.VISIBLE
+                startAdAnimation()
+                loadInterAd()
+            }
+        }
+    }
+
+
+    private fun observeLayoutState() {
         homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
             if (it) {
                 val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = GridLayoutManager(context, 2)
                 layoutManager.onRestoreInstanceState(currentPosition)
-                setUpRecyclerView(view, layoutManager)
+                setUpRecyclerView(layoutManager)
+
+                binding.rectangleToolbarIv.setImageResource(R.drawable.ic_rectangle)
+                binding.gridToolbarIv.setImageResource(R.drawable.ic_grid_clicked)
             } else {
                 val currentPosition = layoutManager.onSaveInstanceState()
                 layoutManager = LinearLayoutManager(context)
                 layoutManager.onRestoreInstanceState(currentPosition)
-                setUpRecyclerView(view, layoutManager)
+                setUpRecyclerView(layoutManager)
+
+                binding.rectangleToolbarIv.setImageResource(R.drawable.ic_rectangle_clicked)
+                binding.gridToolbarIv.setImageResource(R.drawable.ic_grid)
             }
         }
     }
 
-    private fun setUpRecyclerView(view: View, layoutManager: RecyclerView.LayoutManager) {
-        recyclerView = view.findViewById(R.id.rv_recipe_cards)
+    private fun setUpRecyclerView(layoutManager: RecyclerView.LayoutManager) {
+        recyclerView = binding.rvRecipeCards
         recyclerView.layoutManager = layoutManager
     }
 
-    private fun setUpToolbar(view: View) {
-        val toolbar = view.findViewById<Toolbar>(R.id.recipes_toolbar)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-        actionBar?.setDisplayShowTitleEnabled(false)
-        val moreRecipesButton = view.findViewById<Button>(R.id.show_more_recipes_btn)
-        moreRecipesButton.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnShowMoreRecipesClick) }
+    private fun setUpToolbar() {
+        binding.showMoreRecipesBtn.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnShowMoreRecipesClick) }
+        binding.gridToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnGridClick) }
+        binding.rectangleToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick) }
+        binding.adToolbarIv.setOnClickListener { homeViewModel.handleEvent(RecipeListEvent.OnAdClick()) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.recipes_list_menu, menu)
-        rectangleMenuItem = menu.findItem(R.id.rectangle_mi)
-        gridMenuItem = menu.findItem(R.id.grid_mi)
-        homeViewModel.isLayoutGrid.observe(viewLifecycleOwner) {
-            if (it) {
-                menu.findItem(R.id.grid_mi).setIcon(R.drawable.ic_grid_clicked)
-                menu.findItem(R.id.rectangle_mi).setIcon(R.drawable.ic_rectangle)
-            } else {
-                menu.findItem(R.id.grid_mi).setIcon(R.drawable.ic_grid)
-                menu.findItem(R.id.rectangle_mi).setIcon(R.drawable.ic_rectangle_clicked)
-            }
-        }
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.rectangle_mi -> homeViewModel.handleEvent(RecipeListEvent.OnRectangleClick)
-            R.id.grid_mi -> homeViewModel.handleEvent(RecipeListEvent.OnGridClick)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun observeEvent() {
-        homeViewModel.recipeListEvent.observe(this, {
+        homeViewModel.recipeListEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is RecipeListEvent.OnRecipeClick -> {
+                is RecipeListEvent.OnOpenedRecipeClick -> {
                     it.getContentIfNotHandled()?.let {
                         showInterAd {
                             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
+//                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTermsConditionsFragment())
                         }
                     }
                 }
+
+                is RecipeListEvent.OnClosedRecipeClick -> {
+                    it.getContentIfNotHandled()?.let {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUnlockFreeFragment())
+                    }
+                }
+                is RecipeListEvent.OnAdClick -> {
+                    if (!it.hasBeenHandled) {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGoPremiumFragment())
+                        it.setHandled()
+                    }
+                }
             }
-        })
+        }
     }
 
     private fun observeState() {
-        homeViewModel.recipes.observe(viewLifecycleOwner, {
+        homeViewModel.recipes.observe(viewLifecycleOwner) {
             when {
                 it.error.isNotBlank() -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_LONG).show()
@@ -249,16 +275,16 @@ class HomeFragment : Fragment() {
                     adapter.submitList(it.recipes.toMutableList())
                 }
             }
-        })
+        }
     }
 
     private fun setUpAdapter() {
         adapter = RecipesAdapter()
         adapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        adapter.event.observe(viewLifecycleOwner, {
+        adapter.event.observe(viewLifecycleOwner) {
             homeViewModel.handleEvent(it)
-        })
+        }
         recyclerView.adapter = adapter
     }
 

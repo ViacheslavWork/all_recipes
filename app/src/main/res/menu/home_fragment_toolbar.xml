@@ -11,4 +11,9 @@
         android:title="@string/settings"
         android:icon="@drawable/ic_grid"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/ad_mi"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_ad"
+        app:showAsAction="always"/>
 </menu>

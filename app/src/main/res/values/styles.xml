@@ -21,6 +21,14 @@
         <item name="fontFamily">@font/martel_regular</item>
         <item name="color">@color/grafit</item>
     </style>
+    <style name="whiteTextAppearance">
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="color">@color/white</item>
+    </style>
+    <style name="buttonTextAppearance">
+        <item name="fontFamily">@font/martel_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <style name="servingTextAppearance">
         <item name="android:textSize">10sp</item>
@@ -32,6 +40,14 @@
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/martel_regular</item>
         <item name="color">@color/grafit</item>
+    </style>
+    <style name="smallTextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
+    </style>
+    <style name="verySmallTextAppearance">
+        <item name="android:textSize">9sp</item>
+        <item name="fontFamily">@font/martel_regular</item>
     </style>
 
     <style name="groupTextAppearance">
@@ -47,6 +63,10 @@
     <style name="Widget.Theme.SimplyRecipes.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">16dp</item>
     </style>
 
 

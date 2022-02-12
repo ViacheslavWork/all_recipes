@@ -24,10 +24,40 @@
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_unlockFreeFragment"
+            app:destination="@id/unlockFreeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_goPremiumFragment"
+            app:destination="@id/goPremiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="eating.well.recipe.keeper.app.ui.details.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
+    <dialog
+        android:id="@+id/unlockFreeFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.UnlockFreeFragment"
+        android:label="fragment_unlock_free"
+        tools:layout="@layout/fragment_unlock_free" >
+        <action
+            android:id="@+id/action_unlockFreeFragment_to_goPremiumFragment"
+            app:destination="@id/goPremiumFragment" />
+        <action
+            android:id="@+id/action_unlockFreeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/goPremiumFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.go_premium.GoPremiumFragment"
+        android:label="GoPremiumFragment" >
+        <action
+            android:id="@+id/action_goPremiumFragment_to_termsConditionsFragment"
+            app:destination="@id/termsConditionsFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/termsConditionsFragment"
+        android:name="eating.well.recipe.keeper.app.ui.billing.TermsConditionsFragment"
+        android:label="TermsConditionsFragment" />
 </navigation>

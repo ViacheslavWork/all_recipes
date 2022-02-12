@@ -30,24 +30,46 @@
 
             <Button
                 android:id="@+id/show_more_recipes_btn"
+                style="@style/Theme.SimplyRecipes.NoActionBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/show_more_recipes"
-                android:textSize="12sp"
                 android:layout_marginStart="@dimen/title_margin"
+                android:text="@string/show_more_recipes"
+                android:textAllCaps="true"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/recipes_toolbar"
-                android:layout_width="match_parent"
+
+            <ImageView
+                android:id="@+id/rectangle_toolbar_iv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
+                android:src="@drawable/ic_rectangle"
+                android:layout_marginHorizontal="@dimen/margin_menu_item_toolbar_home"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/grid_toolbar_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/grid_toolbar_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_menu_item_toolbar_home"
+                android:src="@drawable/ic_grid_clicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ad_toolbar_iv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ad_toolbar_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_menu_item_toolbar_home"
+                android:src="@drawable/ic_ad"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
