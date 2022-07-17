@@ -30,13 +30,12 @@
     <string name="banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="interstitial_test_id">ca-app-pub-3940256099942544/1033173712</string>
 
-    <string name="app_id">ca-app-pub-1917163978798192~5124743711</string>
-    <string name="banner_id">ca-app-pub-1917163978798192/2498580370</string>
-    <string name="interstitial_id">ca-app-pub-1917163978798192/9993927011</string>
-    <string name="rewarded_id">ca-app-pub-1917163978798192/7040460619</string>
+    <string name="app_id">ca-app-pub-1917163978798192~9801568909</string>
+    <string name="banner_id">ca-app-pub-1917163978798192/7742204167</string>
+    <string name="interstitial_id">ca-app-pub-1917163978798192/8264631118</string>
+    <string name="rewarded_id">ca-app-pub-1917163978798192/1707278852</string>
 
-    <string name="licence_key_test">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSTBtoQ+FMjcis151oLgP45Zu1COfmbv143gc729qkW4YMhQvXA/qBWNn8jNNe3cgX2MjGjyNCfbNE08KDX3SVkrI3THPWB1ytf3M1szqGQLaI/lGSvMpWmylhSXbeSz1YkuFH2oAgs0qkHezslfurQ3bgpeAC0OtOAnRcDzUySv4izaF4pgOOFYV0YLXnVJWCGkV+EtUs8y0Jk861arX9GmWaCLYK0DuRlIRiFS/J2FegoFhPKwMSNwMukGRyJ6TurnbmpLz8GNRMToB74CrdeZBlOWPafairZN44glWzrxciMKNgIoUp1mxyo3dl3TLb4ZdjVNnpqyqGx193vdHwIDAQAB</string>
-    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo7OErtEJ5M997dyE3c3pHpRBFLDpKHISdJPG0gKpYB52L8mo/mvML31Yo9J7aDXUj4xfMMOLlVs6Pw1BgWGPKSeV5uDIZwNXbh/A+sAVC62VdeGoVJpClI5nmOHCrRJlf8zRCysn/Ohr6+cdkkS7ZB4hCCJz+NLM4VKzMuuUCY4ybhw6YvODdSj7CqQ0dsW5PUT3V+oTNWXihbbcWZNwkUwwrkALR6I3Kuk0g5SA3xTAINYHs26x7M4CRyFXU+N+DbUGYkyLYXudKXpKTx6fIlnxkzXCuiXI5nkyUlR9dVVAbxZ1doWt9zaixFdDJZFFLQFbWsH6nuAbngId9uBpdQIDAQAB</string>
+    <string name="licence_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsI/QbWoFxfN8idvWJsGK5+vUXl0/xbgy931CGU1OFv6BzMxppsNiqpqODjZ8QCwZx69rGh92seGI5rmhsoZAwPuI2qIV7YTL+gInte2k4XxtXClbSnlyblJ+dsECVhM6mvnY+Q+nbTmvOImTRfobF6ID4iGsAFhz58bhhUOtWOfnCMb76loPdIkYAgKSV4VKrI/EOz9U5fwCmZXaWoIqRNCvYTL74uCPxspLOGsgtPoQoqCGWd7o3eLwlJKuXaK8NOwSJKR+D0MocDqLm9tV2LzDvphgQNkl5PhWweVx7T8PVImKUoICFTvXnkVCfBsFWZ5z2cFaL4VMJZdn4O1huwIDAQAB</string>
 
     <string name="purchase_id_test">android.test.purchased</string>
 

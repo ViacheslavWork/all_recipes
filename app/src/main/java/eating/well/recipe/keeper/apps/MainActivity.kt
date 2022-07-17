@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         private const val SUBSCRIPTION_ID_TEST = R.string.purchase_id_test
         private const val SUBSCRIPTION_ID_MONTH = "month_subscription"
         private const val SUBSCRIPTION_ID_YEAR = "year_subscription"
-
     }
 
     private val homeViewModel: HomeViewModel by viewModel()
@@ -132,6 +131,7 @@ class MainActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         val isMonthSubscribed = bp?.isSubscribed(SUBSCRIPTION_ID_MONTH)
         val isYearSubscribed = bp?.isSubscribed(SUBSCRIPTION_ID_YEAR)
         return isMonthSubscribed == true || isYearSubscribed == true
+//        return true
     }
 
     private fun updateSubscriptionStatus() {

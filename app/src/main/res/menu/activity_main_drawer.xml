@@ -16,11 +16,11 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_pasta"
-            android:title="@string/pasta" />
-        <item
             android:id="@+id/nav_diet"
             android:title="@string/diet" />
+        <item
+            android:id="@+id/nav_pasta"
+            android:title="@string/pasta" />
         <item
             android:id="@+id/nav_method"
             android:title="@string/method" />
